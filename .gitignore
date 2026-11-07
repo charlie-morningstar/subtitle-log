@@ -1,0 +1,24 @@
+# build output
+dist/
+# generated types
+.astro/
+# dependencies
+node_modules/
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+# environment variables
+.env
+.env.production
+# macOS
+.DS_Store
+# editor
+.vscode/
+!.vscode/extensions.json
+.idea/
+
+# ── 비공개 초안: 올리지 않는 글은 여기에 ──
+# (공개 전 PoC, 민감한 분석 등은 drafts/ 에 두면 커밋되지 않습니다)
+drafts/
