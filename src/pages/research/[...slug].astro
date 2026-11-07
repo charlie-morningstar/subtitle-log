@@ -1,0 +1,28 @@
+---
+import { getCollection, render } from 'astro:content';
+import Post from '../../layouts/Post.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('research');
+  return entries.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const meta = [
+  'Research',
+  entry.data.tags.join(' · '),
+].filter(Boolean).join('  ·  ');
+---
+<Post
+  title={entry.data.title}
+  meta={meta}
+  backHref={base + '/#research'}
+  backLabel="← Research 로 돌아가기"
+>
+  <Content />
+</Post>

@@ -1,0 +1,131 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+import { mindmap } from '../data/mindmap';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const research = (await getCollection('research', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const analysis = (await getCollection('analysis', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const fmt = (d: Date) =>
+  `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}`;
+---
+<Base title="조은진 — Security Research">
+  <section class="hero wrap">
+    <div class="pre">Windows Kernel · Vulnerability Research</div>
+    <h1>근본 원인까지,<br /><em>끝까지</em> 파고듭니다.</h1>
+    <p class="sub">광운대 정보융합학부 1학년 · 화이트햇스쿨 4기.<br />커널·시스템 취약점을 분석하고 그 과정을 기록합니다.</p>
+    <div class="rule"></div>
+  </section>
+
+  <!-- 01. RESEARCH : 양피지 두루마리 -->
+  <section class="sec wrap" id="research">
+    <h2 class="sec-h"><span class="no">01</span>Research</h2>
+    <p class="sec-p">벽에 걸린 두루마리를 눌러 펼쳐보세요.</p>
+    <div class="scrolls">
+      {research.map((r) => (
+        <a class="scroll" href={`${base}/research/${r.id}/`}>
+          <span class="pin"></span>
+          <span class="roll">
+            <span class="title">{r.data.title}</span>
+            {r.data.tags.length > 0 && <span class="tags">{r.data.tags.join(' · ')}</span>}
+          </span>
+          <span class="hint">펼치기</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- 02. ANALYSIS : 분석 글 목록 -->
+  <section class="sec wrap" id="analysis">
+    <h2 class="sec-h"><span class="no">02</span>Analysis</h2>
+    <p class="sec-p">취약점 분석 글 — 계속 쌓아갑니다.</p>
+    <div class="posts">
+      {analysis.length === 0 && <p class="empty-note">곧 첫 글이 올라옵니다.</p>}
+      {analysis.map((p) => (
+        <a class="post" href={`${base}/analysis/${p.id}/`}>
+          <span class="date">{fmt(p.data.date)}</span>
+          <span>
+            <h3>{p.data.title}</h3>
+            <p class="mt">{p.data.summary}</p>
+          </span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- 03. CS MINDMAP -->
+  <section class="sec wrap" id="cs">
+    <h2 class="sec-h"><span class="no">03</span>CS Foundations</h2>
+    <p class="sec-p">커널 취약점을 이해하기 위해 다진 기반. 노드를 눌러보세요.</p>
+    <div class="mapwrap">
+      <div class="mapgrid">
+        <div id="map"><svg id="edges"></svg></div>
+        <div class="panel">
+          <div class="plabel">CS MINDMAP</div>
+          <h3 id="p-title">노드를 선택하세요</h3>
+          <div class="content" id="p-body">왼쪽 지도에서 주제를 누르면 정리한 내용이 여기에 나옵니다.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script define:vars={{ mindmap }} is:inline>
+    const map = document.getElementById('map');
+    const edges = document.getElementById('edges');
+    const pTitle = document.getElementById('p-title');
+    const pBody = document.getElementById('p-body');
+
+    function layout() {
+      map.querySelectorAll('.node').forEach((n) => n.remove());
+      edges.innerHTML = '';
+      const w = map.clientWidth, h = map.clientHeight, cx = w / 2, cy = h / 2;
+      const R = Math.min(w, h) / 2 - 72;
+
+      const root = document.createElement('button');
+      root.className = 'node root';
+      root.textContent = mindmap.root;
+      root.style.left = cx + 'px';
+      root.style.top = cy + 'px';
+      root.onclick = () => select(-1, root);
+      map.appendChild(root);
+
+      mindmap.branches.forEach((b, i) => {
+        const ang = -Math.PI / 2 + (i / mindmap.branches.length) * 2 * Math.PI;
+        const x = cx + R * Math.cos(ang), y = cy + R * Math.sin(ang);
+        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        line.setAttribute('x1', cx); line.setAttribute('y1', cy);
+        line.setAttribute('x2', x); line.setAttribute('y2', y);
+        line.setAttribute('stroke', 'rgba(201,162,75,.4)'); line.setAttribute('stroke-width', '1.5');
+        edges.appendChild(line);
+
+        const n = document.createElement('button');
+        n.className = 'node';
+        n.textContent = b.label;
+        n.style.left = x + 'px';
+        n.style.top = y + 'px';
+        n.onclick = () => select(i, n);
+        map.appendChild(n);
+      });
+    }
+    function select(i, el) {
+      map.querySelectorAll('.node').forEach((n) => n.classList.remove('active'));
+      el.classList.add('active');
+      if (i < 0) {
+        pTitle.textContent = mindmap.root;
+        pBody.textContent = '각 노드를 눌러 세부 주제를 확인하세요.';
+        return;
+      }
+      const b = mindmap.branches[i];
+      pTitle.textContent = b.label;
+      pBody.textContent = b.note;
+    }
+    layout();
+    let t;
+    window.addEventListener('resize', () => { clearTimeout(t); t = setTimeout(layout, 150); });
+  </script>
+</Base>
