@@ -1,166 +1,194 @@
 /* ============================================================
-   조은진 Security Research — 글로벌 스타일
-   컨셉: 저녁 호텔의 버건디 벨벳 벽 + 금색 디테일 + 양피지 두루마리
-   색/폰트만 바꾸려면 :root 변수만 수정하면 됩니다.
+   Subtitle Log — 호텔 리셉션 / 열쇠걸이 (실사 이미지 사용)
+   위: 벽 + 좌우 커튼 + 사인 + [명패→열쇠] 걸이
+   스크롤: 원목 협탁 + 양쪽 램프 + 꽃병 + 각인된 최신 글
    ============================================================ */
 
 :root{
-  --velvet-1:#2a0a12;   /* 가장 깊은 버건디 (벽 가장자리) */
-  --velvet-2:#4a1020;   /* 벨벳 본색 */
-  --velvet-3:#6e1a2e;   /* 조명 받는 부분 */
-  --glow:#c98a5a;       /* 따뜻한 호텔 조명빛 */
-  --gold:#c9a24b;       /* 금색 디테일 (고정 핀, 선) */
-  --parch:#efe6d2;      /* 양피지 바깥 */
-  --parch-in:#f7f1e2;   /* 양피지 안쪽 아이보리 */
-  --ink:#f3e9d8;        /* 벽 위 밝은 텍스트 */
-  --ink-dim:#c9a98f;    /* 벽 위 흐린 텍스트 */
-  --parch-ink:#3a2418;  /* 양피지 위 제목 잉크 */
-  --parch-body:#4a3322; /* 양피지 위 본문 잉크 */
-
+  --wall-1:#260912; --wall-2:#43111f; --wall-3:#5c1a2e;
+  --wood-1:#2e1a0f; --wood-2:#4a2c17; --wood-3:#6e4426; --wood-hi:#8a5a30;
+  --brass-hi:#f3e0a6; --brass:#c9a24b; --brass-lo:#8a6a28;
+  --glow:#f0b964; --ink:#f1e8de; --ink-mid:#cbb4a4; --ink-dim:#9c8475;
+  --line:rgba(201,163,90,.18); --card:rgba(255,240,224,.04);
   --serif:"Cormorant Garamond",Georgia,serif;
-  --batang:"Gowun Batang",serif;
+  --engrave:"Cinzel",Georgia,serif;
+  --sans:"IBM Plex Sans KR",system-ui,sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,monospace;
 }
-
 *{box-sizing:border-box; margin:0; padding:0}
 html{scroll-behavior:smooth}
-
-body{
-  font-family:var(--batang); color:var(--ink);
-  background:var(--velvet-2);
-  background:
-    radial-gradient(120% 80% at 50% 22%, rgba(201,138,90,.22), transparent 55%),
-    radial-gradient(140% 120% at 50% 40%, var(--velvet-3), var(--velvet-2) 45%, var(--velvet-1) 100%);
-  background-attachment:fixed;
-  min-height:100vh; overflow-x:hidden; position:relative;
-  line-height:1.6;
-}
-/* 벨벳 결(수직 미세 줄무늬) */
-body::before{
-  content:""; position:fixed; inset:0; pointer-events:none; z-index:0;
-  background:repeating-linear-gradient(90deg, rgba(0,0,0,.05) 0 2px, rgba(255,255,255,.012) 2px 4px);
-  mix-blend-mode:overlay; opacity:.6;
-}
-/* 상단 벽등 빛무리 */
-body::after{
-  content:""; position:fixed; top:-10%; left:50%; transform:translateX(-50%);
-  width:70vw; height:40vh; z-index:0; pointer-events:none;
-  background:radial-gradient(50% 60% at 50% 0%, rgba(201,138,90,.28), transparent 70%);
-  filter:blur(10px);
-}
+body{font-family:var(--sans); color:var(--ink); min-height:100vh; line-height:1.6; font-size:16px; overflow-x:hidden; background:var(--wall-2)}
 a{color:inherit}
-.wrap{position:relative; z-index:2; max-width:70rem; margin:0 auto; padding:0 2rem}
 .mono{font-family:var(--mono)}
+img{display:block}
 
-/* ---------- 상단 네비 ---------- */
-.top{display:flex; justify-content:space-between; align-items:center; padding:1.8rem 0}
-.brand{font-family:var(--serif); font-size:1.5rem; letter-spacing:.02em; color:var(--ink); text-decoration:none}
-.brand b{color:var(--gold); font-weight:600}
-.topnav{display:flex; gap:1.6rem; font-family:var(--mono); font-size:.76rem; letter-spacing:.04em}
-.topnav a{color:var(--ink-dim); text-decoration:none; transition:color .2s}
-.topnav a:hover{color:var(--glow)}
+/* ════════ 홈 배경 ════════ */
+body.desk{
+  background:
+    radial-gradient(40% 26% at 50% 3%, rgba(240,185,100,.26), transparent 62%),
+    radial-gradient(130% 95% at 50% 24%, var(--wall-3), var(--wall-2) 46%, var(--wall-1) 100%);
+}
+body.desk::before{
+  content:""; position:absolute; top:0; left:0; right:0; height:100vh; z-index:0; pointer-events:none; opacity:.5;
+  background-image:
+    repeating-linear-gradient(45deg, rgba(255,210,170,.028) 0 2px, transparent 2px 24px),
+    repeating-linear-gradient(-45deg, rgba(255,210,170,.028) 0 2px, transparent 2px 24px);
+}
 
-/* ---------- HERO ---------- */
-.hero{text-align:center; padding:5rem 0 3.5rem}
-.hero .pre{font-family:var(--mono); font-size:.8rem; letter-spacing:.3em; text-transform:uppercase; color:var(--gold); margin-bottom:1.6rem}
-.hero h1{font-family:var(--serif); font-weight:500; font-size:clamp(2.8rem,7vw,5rem); line-height:1.08; letter-spacing:.01em; text-shadow:0 2px 30px rgba(0,0,0,.4)}
-.hero h1 em{font-style:italic; color:var(--glow)}
-.hero .sub{margin:1.6rem auto 0; max-width:34rem; color:var(--ink-dim); font-size:1.08rem; line-height:1.8}
-.rule{width:1px; height:3.5rem; margin:2.3rem auto 0; background:linear-gradient(var(--gold),transparent)}
+/* ════════ 히어로 ════════ */
+.hero{position:relative; z-index:2; height:100vh; min-height:600px; overflow:hidden;
+  display:flex; flex-direction:column; align-items:center; padding:19vh 0 4vh}
+/* 상단 스캘럽 발란스 (커튼 윗부분을 덮는 장식 띠) */
+.hero::before{content:""; position:absolute; top:0; left:0; right:0; z-index:6;
+  height:clamp(30px,4.5vh,54px);
+  background:url(/8080_folio/img/valance.png) top center / auto 100% repeat-x;
+  filter:drop-shadow(0 5px 9px rgba(0,0,0,.55))}
 
-/* ---------- 섹션 제목 ---------- */
-.sec{padding:3rem 0 1.5rem}
-.sec-h{font-family:var(--serif); font-size:2.1rem; color:var(--ink); display:flex; align-items:center; gap:1rem; margin-bottom:.3rem}
-.sec-h .no{font-family:var(--mono); font-size:.85rem; color:var(--gold); letter-spacing:.1em}
-.sec-p{color:var(--ink-dim); margin-left:3.2rem; font-size:1rem}
+/* 좌우 커튼 (실사 반쪽) — 바깥을 화면 밖으로 넘겨 흔들려도 벽이 안 보이게 */
+.curtain-img{position:absolute; top:-5vh; height:105vh; width:auto; z-index:3; pointer-events:auto; user-select:none; will-change:transform}
+.curtain-img.left{left:-22px; transform-origin:top left}
+.curtain-img.right{right:-22px; transform-origin:top right}
+@keyframes swayL{0%{transform:rotate(0)}18%{transform:rotate(-1.8deg)}42%{transform:rotate(1deg)}66%{transform:rotate(-.5deg)}85%{transform:rotate(.2deg)}100%{transform:rotate(0)}}
+@keyframes swayR{0%{transform:rotate(0)}18%{transform:rotate(1.8deg)}42%{transform:rotate(-1deg)}66%{transform:rotate(.5deg)}85%{transform:rotate(-.2deg)}100%{transform:rotate(0)}}
+.curtain-img.left:hover{animation:swayL 1.3s ease}
+.curtain-img.right:hover{animation:swayR 1.3s ease}
 
-/* ---------- 양피지 두루마리 (Research) ---------- */
-.scrolls{display:grid; grid-template-columns:repeat(auto-fit,minmax(15rem,1fr)); gap:2.5rem 2rem; margin-top:2.5rem}
-.scroll{position:relative; display:flex; flex-direction:column; align-items:center; text-decoration:none; color:inherit}
-.scroll .pin{width:14px; height:14px; border-radius:50%;
-  background:radial-gradient(circle at 35% 30%, #f3d98a, var(--gold) 60%, #8a6a24);
-  box-shadow:0 2px 5px rgba(0,0,0,.5), 0 0 12px rgba(201,162,75,.5); z-index:4; margin-bottom:-6px}
-.roll{width:100%; max-width:15rem; min-height:3.6rem; position:relative; border-radius:4px; padding:.6rem 1rem;
-  background:linear-gradient(180deg, #e7dcc4, var(--parch) 45%, #d9cbab);
-  box-shadow:0 10px 22px rgba(0,0,0,.45), inset 0 -8px 14px rgba(120,95,55,.35), inset 0 3px 6px rgba(255,255,255,.5);
-  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.2rem;
-  animation:sway 5s ease-in-out infinite;}
-.roll::after{content:""; position:absolute; left:0; right:0; bottom:0; height:10px;
-  background:linear-gradient(#c9b89a, #9c8a66); border-radius:0 0 4px 4px; box-shadow:inset 0 2px 4px rgba(0,0,0,.4)}
-.roll .title{font-family:var(--serif); font-size:1.15rem; font-weight:600; color:var(--parch-ink); text-align:center}
-.roll .tags{font-family:var(--mono); font-size:.6rem; color:#8a6b48; letter-spacing:.03em}
-@keyframes sway{0%,100%{transform:rotate(-.8deg)}50%{transform:rotate(.8deg)}}
-.scroll:hover .roll{animation:swayFast .5s ease-in-out}
-@keyframes swayFast{0%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}100%{transform:rotate(0)}}
-.scroll .hint{margin-top:.8rem; font-family:var(--mono); font-size:.68rem; color:var(--ink-dim); opacity:.7}
+/* 사인 */
+.sign{position:relative; z-index:4; text-align:center; margin-bottom:2.6rem}
+.sign .est{font-family:var(--mono); font-size:.64rem; letter-spacing:.3em; color:var(--brass); text-transform:uppercase}
+.sign h1{font-family:var(--serif); font-weight:600; font-size:clamp(2.4rem,6vw,3.8rem); color:var(--ink); letter-spacing:.02em; line-height:1.02; margin:.45rem 0 .35rem; text-shadow:0 2px 24px rgba(0,0,0,.5)}
+.sign .role{font-family:var(--engrave); font-size:.8rem; letter-spacing:.24em; color:var(--ink-mid); text-transform:uppercase}
 
-/* ---------- 분석 글 목록 (Analysis) ---------- */
-.posts{margin-top:2rem; border-top:1px solid rgba(201,162,75,.25)}
-.post{display:flex; gap:1.3rem; padding:1.2rem 0; border-bottom:1px solid rgba(201,162,75,.18); text-decoration:none; color:inherit}
-.post .date{font-family:var(--mono); font-size:.76rem; color:var(--gold); min-width:5rem; padding-top:.3rem}
-.post h3{font-family:var(--serif); font-size:1.35rem; font-weight:600; color:var(--ink)}
-.post .mt{color:var(--ink-dim); font-size:.97rem; margin-top:.15rem}
-.post:hover h3{color:var(--glow)}
-.empty-note{color:var(--ink-dim); opacity:.7; font-style:italic; padding:1.2rem 0}
+/* 걸이 레일 + 명패→열쇠 */
+.rack{position:relative; z-index:4; display:flex; flex-wrap:wrap; justify-content:center; align-items:flex-start;
+  gap:clamp(.4rem,2.5vw,2rem); max-width:min(54rem,80vw); padding-top:1.4rem}
+.rack::before{content:""; position:absolute; top:0; left:0; right:0; height:6px;
+  background:linear-gradient(180deg,var(--brass-hi),var(--brass) 45%,var(--brass-lo));
+  border-radius:4px; box-shadow:0 3px 8px rgba(0,0,0,.5)}
 
-/* ---------- CS 마인드맵 ---------- */
-.mapwrap{margin-top:2rem; border:1px solid rgba(201,162,75,.3); border-radius:.6rem; overflow:hidden; background:rgba(20,6,12,.35)}
-.mapgrid{display:grid; grid-template-columns:minmax(0,1.25fr) minmax(0,1fr)}
-#map{position:relative; min-height:420px; padding:1rem}
+.peg{position:relative; display:flex; flex-direction:column; align-items:center; text-decoration:none;
+  width:clamp(5rem,11vw,7.6rem)}
+/* 명패 (이미지 + 각인 카테고리) */
+.plate{position:relative; width:100%; filter:drop-shadow(0 3px 5px rgba(0,0,0,.5))}
+.plate img{width:100%; height:auto}
+.plabel{position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+  font-family:var(--engrave); font-weight:600; font-size:clamp(.56rem,1.15vw,.74rem); letter-spacing:.06em;
+  color:#4a330f; text-shadow:0 1px 0 rgba(255,245,210,.5), 0 -1px 1px rgba(90,60,20,.4); padding-bottom:4%}
+/* 열쇠 (이미지, 명패 아래 매달림) */
+.keyimg{width:clamp(34px,4.6vw,48px); height:auto; margin-top:-6%; transform-origin:top center;
+  transition:transform .4s cubic-bezier(.2,.8,.3,1); filter:drop-shadow(0 8px 9px rgba(0,0,0,.5))}
+@keyframes keysway{0%{transform:rotate(0) translateY(0)}22%{transform:rotate(5deg) translateY(5px)}48%{transform:rotate(-3.2deg) translateY(3px)}72%{transform:rotate(1.7deg)}100%{transform:rotate(0)}}
+.peg:hover .keyimg{animation:keysway 1s ease}
+.peg:hover .plate{filter:drop-shadow(0 3px 5px rgba(0,0,0,.5)) drop-shadow(0 0 10px rgba(240,185,100,.5))}
+.peg:focus-visible{outline:none}
+.peg:focus-visible .plate{outline:2px solid var(--brass-hi); outline-offset:3px; border-radius:4px}
+
+.scrollcue{position:relative; z-index:4; margin-top:auto; padding-top:2rem; font-family:var(--mono); font-size:.7rem; letter-spacing:.1em; color:var(--ink-dim); opacity:.75; display:flex; flex-direction:column; align-items:center; gap:.5rem}
+.scrollcue .chev{width:12px; height:12px; border-right:1.5px solid var(--brass); border-bottom:1.5px solid var(--brass); transform:rotate(45deg); animation:bob 1.8s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:rotate(45deg) translateY(0)}50%{transform:rotate(45deg) translateY(5px)}}
+
+@media(max-width:620px){
+  .curtain-img{height:100vh; opacity:.9}
+  .rack{max-width:92vw; gap:.6rem}
+  .peg{width:28vw}
+}
+
+/* ════════ 원목 협탁 (스크롤) ════════ */
+.console{position:relative; z-index:2; padding:1rem clamp(1rem,5vw,4rem) 5rem}
+.console-inner{position:relative; max-width:62rem; margin:0 auto}
+
+.console-top{position:relative; display:flex; justify-content:space-around; align-items:flex-end; gap:1rem; padding:0 2%;
+  z-index:3; min-height:180px;
+  background:linear-gradient(180deg, transparent 0 calc(100% - 46px), var(--wood-hi) calc(100% - 46px), var(--wood-3) calc(100% - 42px), var(--wood-2) calc(100% - 6px), var(--wood-1) 100%)}
+.console-top::after{content:""; position:absolute; left:0; right:0; bottom:0; height:40px;
+  background:repeating-linear-gradient(90deg, rgba(0,0,0,.14) 0 3px, rgba(255,210,150,.04) 3px 10px); opacity:.55}
+.lamp{height:clamp(120px,19vw,172px); width:auto; position:relative; z-index:4;
+  filter:drop-shadow(0 0 34px rgba(255,207,132,.55)) drop-shadow(0 6px 8px rgba(0,0,0,.45))}
+.vase{height:clamp(128px,21vw,184px); width:auto; position:relative; z-index:4;
+  filter:drop-shadow(0 6px 10px rgba(0,0,0,.4))}
+
+.cabinet{position:relative; z-index:2; margin-top:-2px; padding:2.4rem clamp(1rem,4vw,3rem) 3rem;
+  background:linear-gradient(180deg,var(--wood-2),var(--wood-1)); border-top:3px solid var(--wood-hi);
+  box-shadow:inset 0 6px 14px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,200,140,.18)}
+.cabinet::before{content:""; position:absolute; inset:0; pointer-events:none; opacity:.35;
+  background:repeating-linear-gradient(88deg, rgba(0,0,0,.14) 0 2px, rgba(255,200,140,.03) 2px 11px)}
+
+.ledger-frame{position:relative; z-index:2; max-width:40rem; margin:0 auto; padding:2.2rem 2.4rem 2.4rem; border-radius:4px;
+  background:linear-gradient(180deg,#24140b,#301b0e);
+  box-shadow:inset 0 3px 10px rgba(0,0,0,.7), inset 0 -2px 4px rgba(255,200,140,.12), 0 1px 0 rgba(255,210,150,.22);
+  border:1px solid rgba(0,0,0,.4); outline:1px solid rgba(255,200,140,.12); outline-offset:-5px}
+.ledger-frame .lh{text-align:center; font-family:var(--engrave); font-size:.82rem; letter-spacing:.2em; text-transform:uppercase; color:#b9915a; margin-bottom:1.4rem; text-shadow:0 1px 0 rgba(255,210,150,.2), 0 -1px 1px rgba(0,0,0,.6)}
+.ledger{display:flex; flex-direction:column}
+.ledger a{display:flex; justify-content:space-between; align-items:baseline; gap:1rem; padding:.8rem .2rem; text-decoration:none; border-bottom:1px solid rgba(0,0,0,.35); box-shadow:0 1px 0 rgba(255,200,140,.07)}
+.ledger a:last-child{border-bottom:none; box-shadow:none}
+.ledger .t{font-family:var(--serif); font-size:1.18rem; font-weight:600; color:#d8b676; text-shadow:0 1px 0 rgba(255,220,160,.18), 0 -1px 1px rgba(0,0,0,.7)}
+.ledger .d{font-family:var(--mono); font-size:.72rem; color:#8a6c44; white-space:nowrap}
+.ledger a:hover .t{color:var(--glow)}
+.ledger .empty{color:#8a6c44; font-style:italic; text-align:center; padding:1rem}
+@media(max-width:560px){ .lamp{height:110px} .vase{height:120px} .ledger a{flex-direction:column; gap:.2rem} }
+
+/* ════════════════════════════════════════════
+   내부 페이지
+   ════════════════════════════════════════════ */
+body.inner{background:radial-gradient(70% 50% at 50% 0%, rgba(240,185,100,.08), transparent 60%), linear-gradient(180deg,#241019,#1a0b11 60%,#140810); background-attachment:fixed;}
+.inner-top{position:sticky; top:0; z-index:20; backdrop-filter:blur(8px); background:rgba(20,8,14,.7); border-bottom:1px solid var(--line)}
+.inner-top .in{max-width:52rem; margin:0 auto; padding:1rem 1.6rem; display:flex; justify-content:space-between; align-items:center}
+.inner-top .back{font-family:var(--mono); font-size:.74rem; color:var(--ink-mid); text-decoration:none}
+.inner-top .back:hover{color:var(--brass)}
+.inner-top .mark{font-family:var(--serif); font-size:1.1rem; color:var(--ink); text-decoration:none}
+.inner-top .mark b{color:var(--brass)}
+.inner-body{max-width:52rem; margin:0 auto; padding:3rem 1.6rem 5rem}
+.page-head{margin-bottom:2rem}
+.page-head .plabel{position:static; display:block; font-family:var(--mono); font-size:.72rem; letter-spacing:.14em; color:var(--brass); text-transform:uppercase; margin-bottom:.6rem; text-shadow:none}
+.page-head h1{font-family:var(--serif); font-weight:600; font-size:clamp(2rem,5vw,2.8rem); color:var(--ink); line-height:1.1}
+.page-head .lead{color:var(--ink-mid); margin-top:.8rem; max-width:40rem}
+.cards{display:grid; grid-template-columns:repeat(auto-fill,minmax(16rem,1fr)); gap:1rem; margin-top:1.5rem}
+.card{display:flex; flex-direction:column; gap:.5rem; text-decoration:none; color:inherit; background:var(--card); border:1px solid var(--line); border-radius:.55rem; padding:1.3rem 1.4rem; transition:border-color .2s, transform .2s}
+.card:hover{border-color:rgba(201,163,90,.45); transform:translateY(-2px)}
+.card .ctags{font-family:var(--mono); font-size:.66rem; letter-spacing:.04em; color:var(--brass); text-transform:uppercase}
+.card h3{font-size:1.12rem; font-weight:600; color:var(--ink); line-height:1.35}
+.card .csum{font-size:.9rem; color:var(--ink-mid); line-height:1.6}
+.card .cgo{margin-top:.3rem; font-family:var(--mono); font-size:.72rem; color:var(--ink-dim)}
+.card:hover .cgo{color:var(--brass)}
+.posts{border-top:1px solid var(--line); margin-top:1.5rem}
+.post{display:grid; grid-template-columns:5.5rem 1fr; gap:1rem; padding:1.15rem .3rem; border-bottom:1px solid var(--line); text-decoration:none; color:inherit; transition:background .2s}
+.post:hover{background:var(--card)}
+.post .date{font-family:var(--mono); font-size:.74rem; color:var(--brass-lo); padding-top:.2rem}
+.post h3{font-size:1.08rem; font-weight:600; color:var(--ink)}
+.post .mt{color:var(--ink-mid); font-size:.9rem; margin-top:.12rem}
+.post:hover h3{color:var(--brass)}
+.empty-note{color:var(--ink-dim); font-size:.9rem; padding:1.4rem .3rem}
+@media(max-width:520px){ .post{grid-template-columns:1fr; gap:.2rem} }
+.mapwrap{border:1px solid var(--line); border-radius:.55rem; overflow:hidden; background:var(--card); margin-top:1.5rem}
+.mapgrid{display:grid; grid-template-columns:minmax(0,1.2fr) minmax(0,1fr)}
+#map{position:relative; min-height:400px; padding:1rem}
 #map svg{position:absolute; inset:0; width:100%; height:100%; pointer-events:none}
-.node{position:absolute; transform:translate(-50%,-50%); font-family:var(--mono); font-size:.74rem;
-  background:rgba(247,241,226,.92); border:1px solid var(--gold); color:var(--parch-ink);
-  padding:.45rem .7rem; border-radius:.4rem; cursor:pointer; white-space:nowrap; transition:all .15s; z-index:2}
-.node:hover{background:#fff; box-shadow:0 0 14px rgba(201,162,75,.5)}
-.node.root{background:var(--gold); color:var(--velvet-1); border-color:#f3d98a; font-size:.82rem; font-weight:600}
-.node.active{background:var(--glow); color:#fff; border-color:var(--glow)}
-.panel{border-left:1px solid rgba(201,162,75,.3); padding:1.6rem; min-height:420px}
-.panel .plabel{font-family:var(--mono); font-size:.72rem; color:var(--gold); letter-spacing:.1em; margin-bottom:.5rem}
-.panel h3{font-family:var(--serif); font-size:1.5rem; color:var(--ink); margin-bottom:.8rem}
-.panel .content{color:var(--ink-dim); font-size:1rem; line-height:1.7; white-space:pre-wrap}
-@media(max-width:760px){ .mapgrid{grid-template-columns:1fr} .panel{border-left:none; border-top:1px solid rgba(201,162,75,.3); min-height:auto} }
-
-/* ---------- 푸터 ---------- */
-.foot{text-align:center; padding:4rem 0 3rem; color:var(--ink-dim); font-family:var(--mono); font-size:.8rem; letter-spacing:.05em}
-.foot a{color:var(--gold); text-decoration:none; margin:0 .6rem}
-.foot a:hover{color:var(--glow)}
-
-/* ============================================================
-   개별 글 페이지 — 펼쳐진 양피지 (읽기 좋게)
-   ============================================================ */
-.parchment-stage{position:relative; z-index:2; max-width:44rem; margin:0 auto; padding:3.5rem 1.5rem 5rem}
-.back-link{display:inline-block; font-family:var(--mono); font-size:.76rem; color:var(--ink-dim); text-decoration:none; margin-bottom:1.5rem}
-.back-link:hover{color:var(--glow)}
-.parchment{position:relative; transform-origin:top center; animation:unfurl .7s cubic-bezier(.2,.8,.25,1);
-  background:radial-gradient(130% 100% at 50% 0%, var(--parch-in) 45%, var(--parch) 80%, #d6c6a4 100%);
-  border-radius:6px; padding:3.5rem clamp(1.5rem,5vw,3.5rem) 4rem;
-  box-shadow:0 30px 70px rgba(0,0,0,.55), inset 0 0 50px rgba(150,120,70,.18);}
-.parchment::before,.parchment::after{content:""; position:absolute; left:-1%; width:102%; height:1.4rem;
-  background:linear-gradient(180deg,#d9cbab,#c3b48f); border-radius:6px; box-shadow:0 4px 10px rgba(0,0,0,.4)}
-.parchment::before{top:-.7rem}
-.parchment::after{bottom:-.7rem; background:linear-gradient(0deg,#d9cbab,#c3b48f)}
-@keyframes unfurl{0%{transform:scaleY(.02); opacity:0}40%{opacity:1}100%{transform:scaleY(1); opacity:1}}
-@media(prefers-reduced-motion:reduce){.parchment{animation:none}}
-
-.parchment .p-meta{font-family:var(--mono); font-size:.72rem; color:#8a6b48; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.6rem}
-.parchment h1{font-family:var(--serif); font-size:clamp(2rem,5vw,2.8rem); color:var(--parch-ink); line-height:1.15; margin-bottom:1.8rem}
-
-/* 글 본문(마크다운) 가독성 */
-.prose{color:var(--parch-body); font-size:1.05rem; line-height:1.85}
+.node{position:absolute; transform:translate(-50%,-50%); font-family:var(--mono); font-size:.72rem; background:rgba(26,11,17,.92); border:1px solid var(--line); color:var(--ink-mid); padding:.42rem .66rem; border-radius:.35rem; cursor:pointer; white-space:nowrap; transition:all .15s; z-index:2}
+.node:hover{border-color:var(--brass); color:var(--ink)}
+.node.root{background:var(--brass); color:#201008; border-color:var(--brass); font-weight:600}
+.node.active{border-color:var(--glow); color:var(--glow)}
+.panel{border-left:1px solid var(--line); padding:1.5rem}
+.panel .plabel{position:static; display:block; font-family:var(--mono); font-size:.68rem; letter-spacing:.1em; color:var(--brass-lo); margin-bottom:.5rem; text-shadow:none}
+.panel h3{font-size:1.2rem; font-weight:600; color:var(--ink); margin-bottom:.7rem}
+.panel .content{color:var(--ink-mid); font-size:.92rem; line-height:1.7; white-space:pre-wrap}
+@media(max-width:700px){ .mapgrid{grid-template-columns:1fr} .panel{border-left:none; border-top:1px solid var(--line)} }
+.article .a-meta{font-family:var(--mono); font-size:.7rem; letter-spacing:.06em; color:var(--brass); text-transform:uppercase; margin-bottom:.7rem}
+.prose{color:var(--ink-mid); font-size:1rem; line-height:1.85}
 .prose > * + *{margin-top:1.1rem}
-.prose h2{font-family:var(--serif); font-size:1.7rem; color:var(--parch-ink); margin-top:2.4rem; border-bottom:1px solid rgba(120,90,50,.25); padding-bottom:.3rem}
-.prose h3{font-family:var(--serif); font-size:1.35rem; color:var(--parch-ink); margin-top:1.8rem}
-.prose a{color:var(--velvet-3); text-decoration:underline; text-underline-offset:2px}
-.prose strong{color:var(--parch-ink)}
-.prose ul,.prose ol{padding-left:1.4rem}
+.prose h2{font-size:1.4rem; font-weight:600; color:var(--ink); margin-top:2.3rem; padding-bottom:.35rem; border-bottom:1px solid var(--line)}
+.prose h3{font-size:1.15rem; font-weight:600; color:var(--ink); margin-top:1.7rem}
+.prose a{color:var(--glow); text-decoration:underline; text-underline-offset:2px}
+.prose strong{color:var(--ink); font-weight:600}
+.prose ul,.prose ol{padding-left:1.3rem}
 .prose li{margin-top:.4rem}
-.prose blockquote{border-left:3px solid var(--gold); padding:.3rem 0 .3rem 1rem; color:#6a5038; font-style:italic}
-.prose code{font-family:var(--mono); font-size:.86em; background:rgba(120,90,50,.12); padding:.12em .4em; border-radius:.25em}
-.prose pre{background:#241017; color:#eadfce; padding:1.1rem 1.3rem; border-radius:.5rem; overflow-x:auto; font-size:.86rem; line-height:1.6; box-shadow:inset 0 0 0 1px rgba(201,162,75,.25)}
-.prose pre code{background:none; padding:0; font-size:inherit; color:inherit}
+.prose blockquote{border-left:2px solid var(--brass-lo); padding:.2rem 0 .2rem 1rem; color:var(--ink-dim); font-style:italic}
+.prose code{font-family:var(--mono); font-size:.86em; background:rgba(201,163,90,.12); color:var(--ink); padding:.12em .4em; border-radius:.25em}
+.prose pre{background:#140509; border:1px solid var(--line); color:#e8dccb; padding:1.1rem 1.3rem; border-radius:.5rem; overflow-x:auto; font-size:.84rem; line-height:1.6}
+.prose pre code{background:none; padding:0; color:inherit}
 .prose img{max-width:100%; border-radius:.4rem}
-.prose table{width:100%; border-collapse:collapse; font-size:.95rem}
-.prose th,.prose td{border:1px solid rgba(120,90,50,.3); padding:.5rem .7rem; text-align:left}
-.prose hr{border:none; border-top:1px solid rgba(120,90,50,.3); margin:2rem 0}
-
-:focus-visible{outline:2px solid var(--gold); outline-offset:3px; border-radius:.2rem}
+.prose hr{border:none; border-top:1px solid var(--line); margin:2rem 0}
+.inner-foot{border-top:1px solid var(--line); padding:2rem 0 3rem; text-align:center; color:var(--ink-dim); font-family:var(--mono); font-size:.76rem}
+.inner-foot a{color:var(--ink-dim); text-decoration:none; margin:0 .6rem}
+.inner-foot a:hover{color:var(--brass)}
+:focus-visible{outline:2px solid var(--brass); outline-offset:3px; border-radius:.2rem}
+@media(prefers-reduced-motion:reduce){*{transition:none!important; animation:none!important}}
