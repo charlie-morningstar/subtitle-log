@@ -1,0 +1,32 @@
+---
+import Base from './Base.astro';
+export interface Props {
+  title: string;
+  label?: string;
+  lead?: string;
+}
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const { title, label, lead } = Astro.props;
+---
+<Base title={`${title} — 조은진`} bodyClass="inner">
+  <header class="inner-top">
+    <div class="in">
+      <a class="back" href={base + '/'}>← 프런트로</a>
+      <a class="mark" href={base + '/'}>조은진<b>.</b></a>
+    </div>
+  </header>
+
+  <main class="inner-body">
+    <div class="page-head">
+      {label && <div class="plabel">{label}</div>}
+      <h1>{title}</h1>
+      {lead && <p class="lead">{lead}</p>}
+    </div>
+    <slot />
+  </main>
+
+  <footer class="inner-foot">
+    <a href="mailto:subtitle8080@gmail.com">email</a>
+    <a href="https://github.com/charlie-morningstar" target="_blank" rel="noopener">github</a>
+  </footer>
+</Base>

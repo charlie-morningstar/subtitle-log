@@ -22,3 +22,6 @@ pnpm-debug.log*
 # ── 비공개 초안: 올리지 않는 글은 여기에 ──
 # (공개 전 PoC, 민감한 분석 등은 drafts/ 에 두면 커밋되지 않습니다)
 drafts/
+
+# Claude 작업/계획 파일 (공개 레포에 올리지 않음)
+Claude outputs/
