@@ -25,3 +25,5 @@ drafts/
 
 # Claude 작업/계획 파일 (공개 레포에 올리지 않음)
 Claude outputs/
+*.bak
+.history/

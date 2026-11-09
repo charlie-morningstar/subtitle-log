@@ -14,15 +14,18 @@ const keys = [
 
 const research = await getCollection('research', ({ data }) => !data.draft);
 const analysis = await getCollection('analysis', ({ data }) => !data.draft);
-const latest = [
-  ...research.map((e) => ({ title: e.data.title, date: e.data.date, href: `${base}/research/${e.id}/` })),
-  ...analysis.map((e) => ({ title: e.data.title, date: e.data.date, href: `${base}/analysis/${e.id}/` })),
-].sort((a, b) => b.date.valueOf() - a.date.valueOf()).slice(0, 7);
+const posts = [
+  ...research.map((e) => ({ title: e.data.title, summary: e.data.summary, date: e.data.date, featured: e.data.featured, href: `${base}/research/${e.id}/` })),
+  ...analysis.map((e) => ({ title: e.data.title, summary: e.data.summary, date: e.data.date, featured: e.data.featured, href: `${base}/analysis/${e.id}/` })),
+].sort((a, b) => b.date.valueOf() - a.date.valueOf());
+const featured = posts.filter((p) => p.featured).slice(0, 3);
+const latest = posts;
 const fmt = (d: Date) => `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')}`;
 ---
 <Base title="Subtitle Log — 조은진" bodyClass="desk">
   <!-- 히어로 -->
   <section class="hero">
+    <div class="valance" aria-hidden="true"></div>
     <img class="curtain-img left" src={img('curtain_left.png')} alt="" aria-hidden="true" />
     <img class="curtain-img right" src={img('curtain_right.png')} alt="" aria-hidden="true" />
 
@@ -46,28 +49,95 @@ const fmt = (d: Date) => `${d.getFullYear()}.${String(d.getMonth() + 1).padStart
     <div class="scrollcue mono"><span>아래로</span><span class="chev"></span></div>
   </section>
 
+  <script is:inline>
+    // 첫 페인트 후 커튼 transition 활성화 (로드 시 애니메이션 방지)
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      document.documentElement.classList.add('anim-ready');
+    }));
+  </script>
+
   <!-- 원목 협탁 (스크롤) -->
   <section class="console">
     <div class="console-inner">
-      <div class="console-top">
-        <img class="lamp" src={img('lamp.png')} alt="" aria-hidden="true" />
-        <img class="vase" src={img('vase.png')} alt="" aria-hidden="true" />
-        <img class="lamp" src={img('lamp.png')} alt="" aria-hidden="true" />
-      </div>
-      <div class="cabinet">
-        <div class="ledger-frame">
-          <div class="lh">Latest Entries</div>
-          <div class="ledger">
-            {latest.length === 0 && <div class="empty">곧 첫 기록이 새겨집니다.</div>}
-            {latest.map((p) => (
-              <a href={p.href}>
-                <span class="t">{p.title}</span>
-                <span class="d">{fmt(p.date)}</span>
-              </a>
-            ))}
+
+      <!-- 선반 = 원목 데스크 이미지 + 램프/화병 + 추천 기록 -->
+      <div class="shelf">
+        <div class="shelf-decor">
+          <img class="lamp" src={img('lamp.png')} alt="" aria-hidden="true" />
+          <img class="vase" src={img('vase.png')} alt="" aria-hidden="true" />
+          <img class="lamp" src={img('lamp.png')} alt="" aria-hidden="true" />
+        </div>
+        <div class="shelf-wood">
+          <img class="shelf-img" src={img('console.png')} alt="" aria-hidden="true" />
+          <div class="featured">
+            <div class="feat-head">Featured · 추천 기록</div>
+            <div class="feat-list">
+              {featured.length === 0 && <span class="feat-empty">추천 기록이 곧 올라옵니다.</span>}
+              {featured.map((p) => (
+                <a class="feat-row" href={p.href}>
+                  <span class="ft">{p.title}</span>
+                  <span class="fs">{p.summary}</span>
+                </a>
+              ))}
+            </div>
           </div>
         </div>
       </div>
+
+      <!-- Latest Entries = 아래 따로, 5개씩 페이지네이션 -->
+      <div class="latest-wrap" id="latestWrap">
+        <div class="latest-head">Latest Entries</div>
+        <div class="latest-list" id="latestList">
+          {latest.length === 0 && <div class="empty">곧 첫 기록이 새겨집니다.</div>}
+          {latest.map((p, i) => (
+            <a class="lrow" href={p.href} data-idx={i}>
+              <span class="lt">{p.title}</span>
+              <span class="ld">{fmt(p.date)}</span>
+            </a>
+          ))}
+        </div>
+        <nav class="pager" id="pager" aria-label="페이지 이동"></nav>
+      </div>
+
     </div>
   </section>
+
+  <script is:inline>
+    (function () {
+      var list = document.getElementById('latestList');
+      var pager = document.getElementById('pager');
+      var wrap = document.getElementById('latestWrap');
+      if (!list || !pager) return;
+      var rows = Array.prototype.slice.call(list.querySelectorAll('.lrow'));
+      var per = 5;
+      var pages = Math.max(1, Math.ceil(rows.length / per));
+      var cur = 1;
+      function render() {
+        for (var i = 0; i < rows.length; i++) {
+          var pg = Math.floor(i / per) + 1;
+          rows[i].style.display = (pg === cur) ? '' : 'none';
+        }
+        pager.innerHTML = '';
+        if (pages <= 1) return;
+        function mk(label, page, active, nav, disabled) {
+          var b = document.createElement('button');
+          b.type = 'button';
+          b.className = 'pg' + (active ? ' active' : '') + (nav ? ' nav' : '');
+          b.textContent = label;
+          if (disabled) { b.disabled = true; }
+          else {
+            b.addEventListener('click', function () {
+              cur = page; render();
+              if (wrap) wrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+          }
+          pager.appendChild(b);
+        }
+        mk('‹', cur - 1, false, true, cur === 1);
+        for (var p = 1; p <= pages; p++) mk(String(p), p, p === cur, false, false);
+        mk('›', cur + 1, false, true, cur === pages);
+      }
+      render();
+    })();
+  </script>
 </Base>

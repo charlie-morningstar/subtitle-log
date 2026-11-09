@@ -28,26 +28,32 @@ body.desk{
     radial-gradient(40% 26% at 50% 3%, rgba(240,185,100,.26), transparent 62%),
     radial-gradient(130% 95% at 50% 24%, var(--wall-3), var(--wall-2) 46%, var(--wall-1) 100%);
 }
+/* 호텔 다마스크 벽지 질감 */
 body.desk::before{
-  content:""; position:absolute; top:0; left:0; right:0; height:100vh; z-index:0; pointer-events:none; opacity:.5;
+  content:""; position:absolute; top:0; left:0; right:0; height:100vh; z-index:0; pointer-events:none; opacity:.8;
   background-image:
-    repeating-linear-gradient(45deg, rgba(255,210,170,.028) 0 2px, transparent 2px 24px),
-    repeating-linear-gradient(-45deg, rgba(255,210,170,.028) 0 2px, transparent 2px 24px);
+    url(/8080_folio/img/wall.svg),
+    repeating-linear-gradient(90deg, rgba(0,0,0,.05) 0 1px, transparent 1px 4px);
+  background-size:170px 170px, auto;
 }
 
 /* ════════ 히어로 ════════ */
 .hero{position:relative; z-index:2; height:100vh; min-height:600px; overflow:hidden;
-  display:flex; flex-direction:column; align-items:center; padding:19vh 0 4vh}
-/* 상단 스캘럽 발란스 (커튼 윗부분을 덮는 장식 띠) */
-.hero::before{content:""; position:absolute; top:0; left:0; right:0; z-index:6;
-  height:clamp(30px,4.5vh,54px);
-  background:url(/8080_folio/img/valance.png) top center / auto 100% repeat-x;
-  filter:drop-shadow(0 5px 9px rgba(0,0,0,.55))}
+  display:flex; flex-direction:column; align-items:center; padding:19vh 0 4vh;
+  animation:heroFade .55s ease}
+@keyframes heroFade{from{opacity:0}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.hero{animation:none}}
+/* 상단 스캘럽 발란스 (실제 DOM 요소 — Chrome repaint 플리커 방지, 필터 없음) */
+.valance{position:absolute; top:0; left:0; right:0; z-index:6; pointer-events:none;
+  height:clamp(24px,3.4vh,42px);
+  background:url(/8080_folio/img/valance.png) top center / auto 100% repeat-x}
 
 /* 좌우 커튼 (실사 반쪽) — 바깥을 화면 밖으로 넘겨 흔들려도 벽이 안 보이게 */
 .curtain-img{position:absolute; top:-5vh; height:105vh; width:auto; z-index:3; pointer-events:auto; user-select:none; will-change:transform}
 .curtain-img.left{left:-22px; transform-origin:top left}
 .curtain-img.right{right:-22px; transform-origin:top right}
+/* 커튼 열림/닫힘 모션은 첫 렌더 이후에만 (페이지 로드 시 발동 방지) */
+html.anim-ready .curtain-img{transition:transform 1.5s cubic-bezier(.33,0,.2,1)}
 @keyframes swayL{0%{transform:rotate(0)}18%{transform:rotate(-1.8deg)}42%{transform:rotate(1deg)}66%{transform:rotate(-.5deg)}85%{transform:rotate(.2deg)}100%{transform:rotate(0)}}
 @keyframes swayR{0%{transform:rotate(0)}18%{transform:rotate(1.8deg)}42%{transform:rotate(-1deg)}66%{transform:rotate(.5deg)}85%{transform:rotate(-.2deg)}100%{transform:rotate(0)}}
 .curtain-img.left:hover{animation:swayL 1.3s ease}
@@ -60,19 +66,19 @@ body.desk::before{
 .sign .role{font-family:var(--engrave); font-size:.8rem; letter-spacing:.24em; color:var(--ink-mid); text-transform:uppercase}
 
 /* 걸이 레일 + 명패→열쇠 */
-.rack{position:relative; z-index:4; display:flex; flex-wrap:wrap; justify-content:center; align-items:flex-start;
-  gap:clamp(.4rem,2.5vw,2rem); max-width:min(54rem,80vw); padding-top:1.4rem}
-.rack::before{content:""; position:absolute; top:0; left:0; right:0; height:6px;
+.rack{position:relative; display:flex; flex-wrap:wrap; justify-content:center; align-items:flex-start;
+  gap:clamp(2.2rem,4.5vw,3rem) clamp(.4rem,2.5vw,2rem); max-width:min(54rem,80vw); padding-top:1.4rem}
+.rack::before{content:""; position:absolute; top:0; left:0; right:0; z-index:2; height:6px;
   background:linear-gradient(180deg,var(--brass-hi),var(--brass) 45%,var(--brass-lo));
   border-radius:4px; box-shadow:0 3px 8px rgba(0,0,0,.5)}
 
-.peg{position:relative; display:flex; flex-direction:column; align-items:center; text-decoration:none;
+.peg{position:relative; z-index:4; display:flex; flex-direction:column; align-items:center; text-decoration:none;
   width:clamp(5rem,11vw,7.6rem)}
 /* 명패 (이미지 + 각인 카테고리) */
 .plate{position:relative; width:100%; filter:drop-shadow(0 3px 5px rgba(0,0,0,.5))}
 .plate img{width:100%; height:auto}
 .plabel{position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
-  font-family:var(--engrave); font-weight:600; font-size:clamp(.56rem,1.15vw,.74rem); letter-spacing:.06em;
+  font-family:var(--engrave); font-weight:600; font-size:clamp(.6rem,1.3vw,.8rem); letter-spacing:.05em;
   color:#4a330f; text-shadow:0 1px 0 rgba(255,245,210,.5), 0 -1px 1px rgba(90,60,20,.4); padding-bottom:4%}
 /* 열쇠 (이미지, 명패 아래 매달림) */
 .keyimg{width:clamp(34px,4.6vw,48px); height:auto; margin-top:-6%; transform-origin:top center;
@@ -87,45 +93,79 @@ body.desk::before{
 .scrollcue .chev{width:12px; height:12px; border-right:1.5px solid var(--brass); border-bottom:1.5px solid var(--brass); transform:rotate(45deg); animation:bob 1.8s ease-in-out infinite}
 @keyframes bob{0%,100%{transform:rotate(45deg) translateY(0)}50%{transform:rotate(45deg) translateY(5px)}}
 
-@media(max-width:620px){
-  .curtain-img{height:100vh; opacity:.9}
-  .rack{max-width:92vw; gap:.6rem}
-  .peg{width:28vw}
+/* 좁은 화면: 커튼을 양옆으로 걷어(열어) 숨김 — 리사이즈 시 슬라이드 모션 */
+@media(max-width:820px){
+  .curtain-img.left{transform:translateX(-170%)}
+  .curtain-img.right{transform:translateX(170%)}
+  .curtain-img:hover{animation:none}
+  .hero{height:auto; min-height:100vh; padding-top:9vh}
+  .rack{max-width:94vw; gap:2.8rem 1rem}
+  .peg{width:clamp(7.5rem,30vw,10rem)}
+  .plabel{font-size:clamp(.88rem,3.6vw,1.05rem); padding-bottom:5%}
+  .keyimg{width:clamp(30px,8vw,44px)}
 }
 
 /* ════════ 원목 협탁 (스크롤) ════════ */
-.console{position:relative; z-index:2; padding:1rem clamp(1rem,5vw,4rem) 5rem}
+.console{position:relative; z-index:2; padding:clamp(4rem,10vw,7rem) clamp(1rem,5vw,4rem) 5rem}
 .console-inner{position:relative; max-width:62rem; margin:0 auto}
 
-.console-top{position:relative; display:flex; justify-content:space-around; align-items:flex-end; gap:1rem; padding:0 2%;
-  z-index:3; min-height:180px;
-  background:linear-gradient(180deg, transparent 0 calc(100% - 46px), var(--wood-hi) calc(100% - 46px), var(--wood-3) calc(100% - 42px), var(--wood-2) calc(100% - 6px), var(--wood-1) 100%)}
-.console-top::after{content:""; position:absolute; left:0; right:0; bottom:0; height:40px;
-  background:repeating-linear-gradient(90deg, rgba(0,0,0,.14) 0 3px, rgba(255,210,150,.04) 3px 10px); opacity:.55}
+/* 선반 = 원목 데스크 이미지 + 램프/화병 */
+.shelf{position:relative}
+.shelf-decor{position:relative; z-index:3; display:flex; justify-content:space-around; align-items:flex-end; padding:0 10%; margin-bottom:-3.2%}
 .lamp{height:clamp(120px,19vw,172px); width:auto; position:relative; z-index:4;
   filter:drop-shadow(0 0 34px rgba(255,207,132,.55)) drop-shadow(0 6px 8px rgba(0,0,0,.45))}
 .vase{height:clamp(128px,21vw,184px); width:auto; position:relative; z-index:4;
   filter:drop-shadow(0 6px 10px rgba(0,0,0,.4))}
+.shelf-wood{position:relative; z-index:2}
+.shelf-img{display:block; width:100%; height:auto; filter:drop-shadow(0 20px 34px rgba(0,0,0,.5))}
 
-.cabinet{position:relative; z-index:2; margin-top:-2px; padding:2.4rem clamp(1rem,4vw,3rem) 3rem;
-  background:linear-gradient(180deg,var(--wood-2),var(--wood-1)); border-top:3px solid var(--wood-hi);
-  box-shadow:inset 0 6px 14px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,200,140,.18)}
-.cabinet::before{content:""; position:absolute; inset:0; pointer-events:none; opacity:.35;
-  background:repeating-linear-gradient(88deg, rgba(0,0,0,.14) 0 2px, rgba(255,200,140,.03) 2px 11px)}
+/* 추천 기록 = 데스크 전면 패널에 각인 (데스크톱: 오버레이) */
+.featured{position:absolute; left:12%; right:12%; top:32%; bottom:9%;
+  display:flex; flex-direction:column; justify-content:center; gap:.1rem}
+.feat-head{font-family:var(--engrave); font-size:clamp(.58rem,1.4vw,.8rem); letter-spacing:.22em; text-transform:uppercase; color:#caa06a; text-align:center; margin-bottom:clamp(.4rem,1.4vh,1rem); text-shadow:0 1px 1px rgba(0,0,0,.6)}
+.feat-row{display:block; text-decoration:none; padding:clamp(.25rem,1vh,.6rem) 0; border-top:1px solid rgba(0,0,0,.3)}
+.feat-row:first-of-type{border-top:none}
+.ft{display:block; font-family:var(--serif); font-weight:600; font-size:clamp(.92rem,1.9vw,1.24rem); line-height:1.2; color:#e6c88c; text-shadow:0 1px 0 rgba(255,220,160,.2),0 -1px 1px rgba(0,0,0,.7)}
+.fs{display:-webkit-box; -webkit-line-clamp:1; -webkit-box-orient:vertical; overflow:hidden; font-family:var(--serif); font-size:clamp(.66rem,1.3vw,.82rem); color:#bfa073; margin-top:.12rem}
+.feat-row:hover .ft{color:var(--glow)}
+.feat-empty{color:#b79a6d; font-style:italic; text-align:center}
 
-.ledger-frame{position:relative; z-index:2; max-width:40rem; margin:0 auto; padding:2.2rem 2.4rem 2.4rem; border-radius:4px;
+/* Latest Entries = 아래 따로 */
+.latest-wrap{position:relative; z-index:2; max-width:42rem; margin:clamp(2.2rem,5vw,3.4rem) auto 0; padding:2rem 2.2rem 2.2rem; border-radius:4px;
   background:linear-gradient(180deg,#24140b,#301b0e);
   box-shadow:inset 0 3px 10px rgba(0,0,0,.7), inset 0 -2px 4px rgba(255,200,140,.12), 0 1px 0 rgba(255,210,150,.22);
   border:1px solid rgba(0,0,0,.4); outline:1px solid rgba(255,200,140,.12); outline-offset:-5px}
-.ledger-frame .lh{text-align:center; font-family:var(--engrave); font-size:.82rem; letter-spacing:.2em; text-transform:uppercase; color:#b9915a; margin-bottom:1.4rem; text-shadow:0 1px 0 rgba(255,210,150,.2), 0 -1px 1px rgba(0,0,0,.6)}
-.ledger{display:flex; flex-direction:column}
-.ledger a{display:flex; justify-content:space-between; align-items:baseline; gap:1rem; padding:.8rem .2rem; text-decoration:none; border-bottom:1px solid rgba(0,0,0,.35); box-shadow:0 1px 0 rgba(255,200,140,.07)}
-.ledger a:last-child{border-bottom:none; box-shadow:none}
-.ledger .t{font-family:var(--serif); font-size:1.18rem; font-weight:600; color:#d8b676; text-shadow:0 1px 0 rgba(255,220,160,.18), 0 -1px 1px rgba(0,0,0,.7)}
-.ledger .d{font-family:var(--mono); font-size:.72rem; color:#8a6c44; white-space:nowrap}
-.ledger a:hover .t{color:var(--glow)}
-.ledger .empty{color:#8a6c44; font-style:italic; text-align:center; padding:1rem}
-@media(max-width:560px){ .lamp{height:110px} .vase{height:120px} .ledger a{flex-direction:column; gap:.2rem} }
+.latest-head{text-align:center; font-family:var(--engrave); font-size:.82rem; letter-spacing:.2em; text-transform:uppercase; color:#b9915a; margin-bottom:1.3rem; text-shadow:0 1px 0 rgba(255,210,150,.2), 0 -1px 1px rgba(0,0,0,.6)}
+.latest-list{display:flex; flex-direction:column}
+.lrow{display:flex; justify-content:space-between; align-items:baseline; gap:1rem; padding:.8rem .2rem; text-decoration:none; border-bottom:1px solid rgba(0,0,0,.35); box-shadow:0 1px 0 rgba(255,200,140,.07)}
+.latest-list .lrow:last-of-type{border-bottom:none; box-shadow:none}
+.lt{font-family:var(--serif); font-size:1.12rem; font-weight:600; color:#d8b676; text-shadow:0 1px 0 rgba(255,220,160,.18), 0 -1px 1px rgba(0,0,0,.7)}
+.lrow:hover .lt{color:var(--glow)}
+.ld{font-family:var(--mono); font-size:.72rem; color:#8a6c44; white-space:nowrap}
+.empty{color:#8a6c44; font-style:italic; text-align:center; padding:1rem}
+
+/* 페이지 번호 바 */
+.pager{display:flex; justify-content:center; align-items:center; gap:.4rem; margin-top:1.6rem; flex-wrap:wrap}
+.pg{min-width:2rem; height:2rem; padding:0 .5rem; border:1px solid rgba(255,200,140,.22); border-radius:3px; background:linear-gradient(180deg,#2a1710,#1d0f09); color:#b9915a; font-family:var(--mono); font-size:.82rem; cursor:pointer; transition:color .2s, border-color .2s, background .2s}
+.pg:hover:not(:disabled){color:var(--glow); border-color:rgba(255,200,140,.5)}
+.pg.active{color:#1a0b06; background:linear-gradient(180deg,#e0b878,#c89a55); border-color:#e6c488; font-weight:700; box-shadow:0 1px 4px rgba(0,0,0,.4)}
+.pg.nav{color:#9c7b4e}
+.pg:disabled{opacity:.3; cursor:default}
+
+/* 모바일: 데스크를 선반으로 축소, 추천 기록은 플라크로 분리 */
+@media(max-width:720px){
+  .shelf-wood{height:30vw; max-height:150px; min-height:94px; overflow:hidden; border-radius:0 0 5px 5px}
+  .shelf-img{height:100%; width:100%; object-fit:cover; object-position:top center}
+  .featured{position:static; display:block; margin:1.6rem auto 0; max-width:38rem; padding:1.6rem 1.8rem; border-radius:4px;
+    background:linear-gradient(180deg,#24140b,#301b0e);
+    box-shadow:inset 0 3px 10px rgba(0,0,0,.7), inset 0 -2px 4px rgba(255,200,140,.12), 0 1px 0 rgba(255,210,150,.22);
+    border:1px solid rgba(0,0,0,.4); outline:1px solid rgba(255,200,140,.12); outline-offset:-5px}
+  .feat-head{margin-bottom:1rem}
+  .feat-row{padding:.7rem 0}
+  .ft{font-size:1.12rem}
+  .fs{-webkit-line-clamp:2; font-size:.8rem}
+}
+@media(max-width:560px){ .lamp{height:104px} .vase{height:112px} .lrow{flex-direction:column; gap:.2rem} }
 
 /* ════════════════════════════════════════════
    내부 페이지
@@ -137,7 +177,9 @@ body.inner{background:radial-gradient(70% 50% at 50% 0%, rgba(240,185,100,.08), 
 .inner-top .back:hover{color:var(--brass)}
 .inner-top .mark{font-family:var(--serif); font-size:1.1rem; color:var(--ink); text-decoration:none}
 .inner-top .mark b{color:var(--brass)}
-.inner-body{max-width:52rem; margin:0 auto; padding:3rem 1.6rem 5rem}
+.inner-body{max-width:52rem; margin:0 auto; padding:3rem 1.6rem 5rem; animation:pageIn .55s cubic-bezier(.2,.7,.3,1)}
+@keyframes pageIn{from{opacity:0; transform:translateY(14px)}to{opacity:1; transform:none}}
+@media(prefers-reduced-motion:reduce){.inner-body{animation:none}}
 .page-head{margin-bottom:2rem}
 .page-head .plabel{position:static; display:block; font-family:var(--mono); font-size:.72rem; letter-spacing:.14em; color:var(--brass); text-transform:uppercase; margin-bottom:.6rem; text-shadow:none}
 .page-head h1{font-family:var(--serif); font-weight:600; font-size:clamp(2rem,5vw,2.8rem); color:var(--ink); line-height:1.1}
