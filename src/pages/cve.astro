@@ -7,7 +7,7 @@ const posts = (await getAllPosts()).filter((p) => p.category === CATEGORY);
 const fmt = (d: Date) => `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')}`;
 const shownTags = (tags: string[]) => tags.filter((t) => t.toLowerCase() !== CATEGORY.toLowerCase()).slice(0, 2);
 ---
-<Inner title="CVE" center flora>
+<Inner title="CVE" center>
   {posts.length === 0 && <p class="empty-note">곧 채워집니다 — 이 카테고리의 글이 여기 쌓입니다.</p>}
   <div class="arch" id="archList">
     {posts.map((p, i) => (

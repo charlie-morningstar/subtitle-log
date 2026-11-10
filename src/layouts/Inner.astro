@@ -20,12 +20,6 @@ const img = (f: string) => `${base}/img/${f}`;
 
   <main class="inner-body">
     <div class={`page-head${center ? ' center' : ''}`}>
-      {flora && (
-        <div class="vines" aria-hidden="true">
-          <img class="vine vine-l" src={img('vine.svg')} alt="" />
-          <img class="vine vine-r" src={img('vine.svg')} alt="" />
-        </div>
-      )}
       {center && <img class="head-divider" src={img('divider.png')} alt="" aria-hidden="true" />}
       {label && <div class="plabel">{label}</div>}
       <h1>{title}</h1>
