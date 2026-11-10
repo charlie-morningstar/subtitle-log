@@ -99,9 +99,9 @@ html.anim-ready .curtain-img{transition:transform 1.5s cubic-bezier(.33,0,.2,1)}
   .curtain-img.right{transform:translateX(170%)}
   .curtain-img:hover{animation:none}
   .hero{height:auto; min-height:100vh; padding-top:9vh}
-  .rack{max-width:94vw; gap:2.8rem 1rem}
-  .peg{width:clamp(7.5rem,30vw,10rem)}
-  .plabel{font-size:clamp(.88rem,3.6vw,1.05rem); padding-bottom:5%}
+  .rack{max-width:94vw; gap:2.4rem 1rem}
+  .peg{width:clamp(6rem,23vw,7.6rem)}
+  .plabel{font-size:clamp(.72rem,3vw,.9rem); padding-bottom:5%}
   .keyimg{width:clamp(20px,5vw,28px)}
 }
 
