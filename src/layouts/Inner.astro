@@ -4,22 +4,30 @@ export interface Props {
   title: string;
   label?: string;
   lead?: string;
+  center?: boolean;
+  flora?: boolean;
 }
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-const { title, label, lead } = Astro.props;
+const { title, label, lead, center = false, flora = false } = Astro.props;
+const img = (f: string) => `${base}/img/${f}`;
 ---
 <Base title={`${title} — 조은진`} bodyClass="inner">
   <header class="inner-top">
     <div class="in">
       <a class="back" href={base + '/'}>← 프런트로</a>
-      <a class="mark" href={base + '/'}>조은진<b>.</b></a>
     </div>
   </header>
 
   <main class="inner-body">
-    <div class="page-head">
+    {flora && (
+      <div class="flora-swag" aria-hidden="true">
+        <img src={img('flora.png')} alt="" />
+      </div>
+    )}
+    <div class={`page-head${center ? ' center' : ''}`}>
       {label && <div class="plabel">{label}</div>}
       <h1>{title}</h1>
+      {center && <img class="head-divider" src={img('divider.png')} alt="" aria-hidden="true" />}
       {lead && <p class="lead">{lead}</p>}
     </div>
     <slot />

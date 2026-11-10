@@ -262,10 +262,31 @@ body.inner{background:radial-gradient(70% 50% at 50% 0%, rgba(240,185,100,.08), 
 .ad{font-family:var(--mono); font-size:.7rem; color:var(--ink-dim); white-space:nowrap}
 .asum{color:var(--ink-mid); font-size:.92rem; line-height:1.5; margin-top:.35rem;
   display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden}
-.ameta{display:flex; align-items:center; gap:.45rem; flex-wrap:wrap; margin-top:.6rem}
-.kind{font-family:var(--mono); font-size:.58rem; letter-spacing:.06em; text-transform:uppercase; padding:.16rem .5rem; border-radius:3px; border:1px solid transparent}
-.k-research{color:#e7c98c; background:rgba(216,182,118,.12); border-color:rgba(216,182,118,.4)}
-.k-analysis{color:#bfa07a; background:rgba(201,163,90,.06); border-color:rgba(201,163,90,.22)}
+.ameta{display:flex; align-items:center; gap:.65rem; flex-wrap:wrap; margin-top:.55rem}
+.kind{font-family:var(--mono); font-size:.6rem; letter-spacing:.14em; text-transform:uppercase}
+.k-research{color:var(--brass-hi)}
+.k-analysis{color:var(--ink-dim)}
+.atag{font-family:var(--mono); font-size:.66rem; color:var(--ink-dim)}
+.atag::before{content:"·"; margin-right:.6rem; color:var(--brass-lo)}
+
+/* 중앙 정렬 헤더 + 황동 장식 divider */
+.page-head.center{text-align:center; display:flex; flex-direction:column; align-items:center}
+.page-head.center h1{font-size:clamp(2.2rem,6vw,3.2rem)}
+.head-divider{display:block; width:clamp(190px,40%,310px); height:auto; margin:1rem auto .2rem; opacity:.95}
+
+/* 꽃 장식 (상단에 드리움 · 호버 시 흔들림) */
+.flora-swag{position:relative; width:100vw; margin-left:calc(50% - 50vw); margin-top:-1.6rem; margin-bottom:.4rem;
+  height:clamp(120px,19vw,220px); overflow:hidden; pointer-events:none}
+.flora-swag img{position:absolute; top:0; left:0; width:100%; height:auto; opacity:.92;
+  transform-origin:top center; transition:transform .5s ease; pointer-events:auto}
+.flora-swag:hover img{animation:floraSway 2.3s ease-in-out}
+@keyframes floraSway{
+  0%,100%{transform:rotate(0deg) translateX(0)}
+  18%{transform:rotate(.55deg) translateX(2px)}
+  50%{transform:rotate(-.45deg) translateX(-2px)}
+  78%{transform:rotate(.25deg) translateX(1px)}
+}
+@media(prefers-reduced-motion:reduce){.flora-swag:hover img{animation:none}}
 .arch + .pager{margin-top:2rem}
 @media(max-width:640px){
   .arow{gap:.7rem; padding:1.05rem .2rem}
