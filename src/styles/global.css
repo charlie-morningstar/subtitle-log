@@ -81,7 +81,7 @@ html.anim-ready .curtain-img{transition:transform 1.5s cubic-bezier(.33,0,.2,1)}
   font-family:var(--engrave); font-weight:600; font-size:clamp(.6rem,1.3vw,.8rem); letter-spacing:.05em;
   color:#4a330f; text-shadow:0 1px 0 rgba(255,245,210,.5), 0 -1px 1px rgba(90,60,20,.4); padding-bottom:4%}
 /* 열쇠 (이미지, 명패 아래 매달림) */
-.keyimg{width:clamp(28px,3.8vw,40px); height:auto; margin-top:-6%; transform-origin:top center;
+.keyimg{width:clamp(20px,2.7vw,28px); height:auto; margin-top:-6%; transform-origin:top center;
   transition:transform .4s cubic-bezier(.2,.8,.3,1); filter:drop-shadow(0 8px 9px rgba(0,0,0,.5))}
 @keyframes keysway{0%{transform:rotate(0) translateY(0)}22%{transform:rotate(5deg) translateY(5px)}48%{transform:rotate(-3.2deg) translateY(3px)}72%{transform:rotate(1.7deg)}100%{transform:rotate(0)}}
 .peg:hover .keyimg{animation:keysway 1s ease}
@@ -102,7 +102,7 @@ html.anim-ready .curtain-img{transition:transform 1.5s cubic-bezier(.33,0,.2,1)}
   .rack{max-width:94vw; gap:2.8rem 1rem}
   .peg{width:clamp(7.5rem,30vw,10rem)}
   .plabel{font-size:clamp(.88rem,3.6vw,1.05rem); padding-bottom:5%}
-  .keyimg{width:clamp(26px,6.8vw,38px)}
+  .keyimg{width:clamp(20px,5vw,28px)}
 }
 
 /* ════════ 원목 협탁 (스크롤) ════════ */
@@ -168,7 +168,19 @@ html.anim-ready .curtain-img{transition:transform 1.5s cubic-bezier(.33,0,.2,1)}
 .pg.nav{color:#9c7b4e}
 .pg:disabled{opacity:.3; cursor:default}
 
-@media(max-width:560px){ .lamp{height:110px} .vase{height:120px} .phead{flex-direction:column; gap:.2rem} }
+@media(max-width:640px){
+  .sect-head{margin-bottom:1.2rem}
+  .placard{padding:.42rem 1.3rem; font-size:.7rem; letter-spacing:.15em; gap:.5rem}
+  .placard::before, .placard::after{width:5px; height:5px}
+  .ledger-frame, .latest-wrap{padding:1.5rem 1.3rem 1.6rem}
+  .cabinet{padding:1.8rem 1rem 2rem}
+  .plist a{padding:.9rem .2rem}
+  .pt{font-size:1.02rem}
+  .ps{font-size:.82rem; margin-top:.25rem}
+  .pd{font-size:.64rem}
+  .tag{font-size:.56rem}
+}
+@media(max-width:560px){ .lamp{height:110px} .vase{height:120px} .phead{flex-direction:column; gap:.15rem} }
 
 /* ════════════════════════════════════════════
    내부 페이지
