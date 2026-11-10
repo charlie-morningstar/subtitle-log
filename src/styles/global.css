@@ -188,7 +188,7 @@ html.anim-ready .curtain-img{transition:transform 1.5s cubic-bezier(.33,0,.2,1)}
 body.inner{background:radial-gradient(70% 50% at 50% 0%, rgba(240,185,100,.08), transparent 60%), linear-gradient(180deg,#241019,#1a0b11 60%,#140810); background-attachment:fixed;}
 .inner-top{position:sticky; top:0; z-index:20; backdrop-filter:blur(8px); background:rgba(20,8,14,.7); border-bottom:1px solid var(--line)}
 .inner-top .in{max-width:52rem; margin:0 auto; padding:1rem 1.6rem; display:flex; justify-content:space-between; align-items:center}
-.inner-top .back{font-family:var(--mono); font-size:.74rem; color:var(--ink-mid); text-decoration:none}
+.inner-top .back{font-family:var(--serif); font-size:1.5rem; line-height:1; color:var(--ink-mid); text-decoration:none; padding:.1rem .45rem; display:inline-block}
 .inner-top .back:hover{color:var(--brass)}
 .inner-top .mark{font-family:var(--serif); font-size:1.1rem; color:var(--ink); text-decoration:none}
 .inner-top .mark b{color:var(--brass)}
@@ -269,24 +269,21 @@ body.inner{background:radial-gradient(70% 50% at 50% 0%, rgba(240,185,100,.08), 
 .atag{font-family:var(--mono); font-size:.66rem; color:var(--ink-dim)}
 .atag::before{content:"·"; margin-right:.6rem; color:var(--brass-lo)}
 
-/* 중앙 정렬 헤더 + 황동 장식 divider */
-.page-head.center{text-align:center; display:flex; flex-direction:column; align-items:center}
-.page-head.center h1{font-size:clamp(2.2rem,6vw,3.2rem)}
-.head-divider{display:block; width:clamp(190px,40%,310px); height:auto; margin:1rem auto .2rem; opacity:.95}
+/* 중앙 정렬 헤더 + 작은 황동 문양(제목 위) + 양옆 덩굴 */
+.page-head.center{position:relative; text-align:center; display:flex; flex-direction:column; align-items:center; padding-top:clamp(1rem,3vw,2.2rem)}
+.page-head.center h1{font-size:clamp(2.2rem,6vw,3.2rem); position:relative; z-index:2}
+.head-divider{display:block; width:clamp(84px,14%,124px); height:auto; margin:0 auto .6rem; opacity:.9; position:relative; z-index:2}
 
-/* 꽃 장식 (상단에 드리움 · 호버 시 흔들림) */
-.flora-swag{position:relative; width:100vw; margin-left:calc(50% - 50vw); margin-top:-1.6rem; margin-bottom:.4rem;
-  height:clamp(120px,19vw,220px); overflow:hidden; pointer-events:none}
-.flora-swag img{position:absolute; top:0; left:0; width:100%; height:auto; opacity:.92;
-  transform-origin:top center; transition:transform .5s ease; pointer-events:auto}
-.flora-swag:hover img{animation:floraSway 2.3s ease-in-out}
-@keyframes floraSway{
-  0%,100%{transform:rotate(0deg) translateX(0)}
-  18%{transform:rotate(.55deg) translateX(2px)}
-  50%{transform:rotate(-.45deg) translateX(-2px)}
-  78%{transform:rotate(.25deg) translateX(1px)}
-}
-@media(prefers-reduced-motion:reduce){.flora-swag:hover img{animation:none}}
+.vines{position:absolute; top:0; left:0; right:0; height:0; z-index:1; pointer-events:none}
+.vine{position:absolute; top:clamp(-2.6rem,-4vw,-1.4rem); width:clamp(92px,17vw,172px); height:auto; opacity:.95;
+  transform-origin:top center; transition:transform .6s ease; pointer-events:auto}
+.vine-l{left:clamp(-1.4rem,-2vw,0rem)}
+.vine-r{right:clamp(-1.4rem,-2vw,0rem); transform:scaleX(-1)}
+.page-head.center:hover .vine-l{animation:vineSway 2.4s ease-in-out}
+.page-head.center:hover .vine-r{animation:vineSwayR 2.4s ease-in-out}
+@keyframes vineSway{0%,100%{transform:rotate(0)}22%{transform:rotate(1.1deg)}58%{transform:rotate(-.8deg)}82%{transform:rotate(.4deg)}}
+@keyframes vineSwayR{0%,100%{transform:scaleX(-1) rotate(0)}22%{transform:scaleX(-1) rotate(1.1deg)}58%{transform:scaleX(-1) rotate(-.8deg)}82%{transform:scaleX(-1) rotate(.4deg)}}
+@media(prefers-reduced-motion:reduce){.page-head.center:hover .vine-l,.page-head.center:hover .vine-r{animation:none}}
 .arch + .pager{margin-top:2rem}
 @media(max-width:640px){
   .arow{gap:.7rem; padding:1.05rem .2rem}

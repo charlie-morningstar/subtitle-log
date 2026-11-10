@@ -14,20 +14,21 @@ const img = (f: string) => `${base}/img/${f}`;
 <Base title={`${title} — 조은진`} bodyClass="inner">
   <header class="inner-top">
     <div class="in">
-      <a class="back" href={base + '/'}>← 프런트로</a>
+      <a class="back" href={base + '/'} aria-label="뒤로가기">&#10094;</a>
     </div>
   </header>
 
   <main class="inner-body">
-    {flora && (
-      <div class="flora-swag" aria-hidden="true">
-        <img src={img('flora.png')} alt="" />
-      </div>
-    )}
     <div class={`page-head${center ? ' center' : ''}`}>
+      {flora && (
+        <div class="vines" aria-hidden="true">
+          <img class="vine vine-l" src={img('vine.svg')} alt="" />
+          <img class="vine vine-r" src={img('vine.svg')} alt="" />
+        </div>
+      )}
+      {center && <img class="head-divider" src={img('divider.png')} alt="" aria-hidden="true" />}
       {label && <div class="plabel">{label}</div>}
       <h1>{title}</h1>
-      {center && <img class="head-divider" src={img('divider.png')} alt="" aria-hidden="true" />}
       {lead && <p class="lead">{lead}</p>}
     </div>
     <slot />
