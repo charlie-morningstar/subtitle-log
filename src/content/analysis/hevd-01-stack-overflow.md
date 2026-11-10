@@ -4,6 +4,7 @@ summary: "커널 스택 오버플로우의 root cause와 익스 전략, 그리�
 date: 2026-11-08
 tags: ["HEVD", "Kernel"]
 draft: false
+category: Kernel
 ---
 
 > 틀(템플릿)입니다. HEVD Stack Overflow 모듈을 분석하며 채워 넣으세요.
@@ -39,4 +40,5 @@ draft: false
 ## 정리
 
 이 모듈에서 이해하게 된 핵심.
+
 

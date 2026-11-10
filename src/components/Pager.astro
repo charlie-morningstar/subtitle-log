@@ -1,0 +1,36 @@
+---
+interface Props { listId: string; rowSel?: string; per?: number; }
+const { listId, rowSel = '.arow', per = 10 } = Astro.props;
+const pid = `pg-${listId}`;
+---
+<nav class="pager" id={pid} aria-label="페이지 이동"></nav>
+<script define:vars={{ listId, rowSel, per, pid }}>
+  (function () {
+    var list = document.getElementById(listId);
+    var pager = document.getElementById(pid);
+    if (!list || !pager) return;
+    var rows = Array.prototype.slice.call(list.querySelectorAll(rowSel));
+    var pages = Math.max(1, Math.ceil(rows.length / per));
+    var cur = 1;
+    function render() {
+      for (var i = 0; i < rows.length; i++) {
+        rows[i].style.display = (Math.floor(i / per) + 1 === cur) ? '' : 'none';
+      }
+      pager.innerHTML = '';
+      if (pages <= 1) return;
+      function mk(label, page, active, nav, disabled) {
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'pg' + (active ? ' active' : '') + (nav ? ' nav' : '');
+        b.textContent = label;
+        if (disabled) { b.disabled = true; }
+        else { b.addEventListener('click', function () { cur = page; render(); list.scrollIntoView({ behavior: 'smooth', block: 'start' }); }); }
+        pager.appendChild(b);
+      }
+      mk('‹', cur - 1, false, true, cur === 1);
+      for (var p = 1; p <= pages; p++) mk(String(p), p, p === cur, false, false);
+      mk('›', cur + 1, false, true, cur === pages);
+    }
+    render();
+  })();
+</script>

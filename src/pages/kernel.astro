@@ -1,6 +1,30 @@
 ---
 import Inner from '../layouts/Inner.astro';
+import Pager from '../components/Pager.astro';
+import { getAllPosts } from '../lib/posts';
+const CATEGORY = 'Kernel';
+const posts = (await getAllPosts()).filter((p) => p.category === CATEGORY);
+const fmt = (d: Date) => `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')}`;
 ---
 <Inner title="Kernel" label="Subtitle Log" lead="윈도우 커널 · 권한상승(EOP) · HEVD 분석.">
-  <p class="empty-note">곧 채워집니다 — HEVD 분석 시리즈와 커널 EOP root cause 기록이 여기 쌓입니다.</p>
+  {posts.length === 0 && <p class="empty-note">곧 채워집니다 — 이 카테고리의 글이 여기 쌓입니다.</p>}
+  <div class="arch" id="archList">
+    {posts.map((p, i) => (
+      <a class="arow" href={p.href} data-idx={i}>
+        <span class="anum">{String(i + 1).padStart(2, '0')}</span>
+        <span class="amain">
+          <span class="ahead">
+            <span class="at">{p.title}</span>
+            <span class="ad">{fmt(p.date)}</span>
+          </span>
+          <span class="asum">{p.summary}</span>
+          <span class="ameta">
+            <span class={`kind k-${p.kind.toLowerCase()}`}>{p.kind}</span>
+            {p.tags.slice(0, 3).map((t) => <span class="tag">{t}</span>)}
+          </span>
+        </span>
+      </a>
+    ))}
+  </div>
+  <Pager listId="archList" rowSel=".arow" per={10} />
 </Inner>

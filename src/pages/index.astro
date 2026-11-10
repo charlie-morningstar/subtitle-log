@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
-import { getCollection } from 'astro:content';
+import Pager from '../components/Pager.astro';
+import { getAllPosts } from '../lib/posts';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const img = (f: string) => `${base}/img/${f}`;
 
@@ -12,12 +13,7 @@ const keys = [
   { label: 'Notes',     href: `${base}/notes/` },
 ];
 
-const research = await getCollection('research', ({ data }) => !data.draft);
-const analysis = await getCollection('analysis', ({ data }) => !data.draft);
-const posts = [
-  ...research.map((e) => ({ title: e.data.title, summary: e.data.summary, date: e.data.date, tags: e.data.tags, featured: e.data.featured, href: `${base}/research/${e.id}/` })),
-  ...analysis.map((e) => ({ title: e.data.title, summary: e.data.summary, date: e.data.date, tags: e.data.tags, featured: e.data.featured, href: `${base}/analysis/${e.id}/` })),
-].sort((a, b) => b.date.valueOf() - a.date.valueOf());
+const posts = await getAllPosts();
 const featured = posts.filter((p) => p.featured).slice(0, 3);
 const latest = posts;
 const fmt = (d: Date) => `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')}`;
@@ -55,7 +51,7 @@ const fmt = (d: Date) => `${d.getFullYear()}.${String(d.getMonth() + 1).padStart
     }));
   </script>
 
-  <!-- 원목 협탁 (스크롤) : 램프·화병 유지 + 캐비닛 = Featured Posts -->
+  <!-- 원목 협탁 (스크롤) : 램프·화병 + 캐비닛 = Featured Posts -->
   <section class="console">
     <div class="console-inner">
       <div class="console-top">
@@ -80,7 +76,7 @@ const fmt = (d: Date) => `${d.getFullYear()}.${String(d.getMonth() + 1).padStart
       </div>
     </div>
 
-    <!-- Latest Entries : 아래 별도, 5개씩 + 페이지 번호 -->
+    <!-- Latest Entries : 5개씩 + 페이지 번호 -->
     <div class="latest-wrap" id="latestWrap">
       <div class="sect-head"><span class="placard">Latest Entries</span></div>
       <div class="plist" id="latestList">
@@ -93,46 +89,7 @@ const fmt = (d: Date) => `${d.getFullYear()}.${String(d.getMonth() + 1).padStart
           </a>
         ))}
       </div>
-      <nav class="pager" id="pager" aria-label="페이지 이동"></nav>
+      <Pager listId="latestList" rowSel=".lrow" per={5} />
     </div>
   </section>
-
-  <script is:inline>
-    (function () {
-      var list = document.getElementById('latestList');
-      var pager = document.getElementById('pager');
-      var wrap = document.getElementById('latestWrap');
-      if (!list || !pager) return;
-      var rows = Array.prototype.slice.call(list.querySelectorAll('.lrow'));
-      var per = 5;
-      var pages = Math.max(1, Math.ceil(rows.length / per));
-      var cur = 1;
-      function render() {
-        for (var i = 0; i < rows.length; i++) {
-          var pg = Math.floor(i / per) + 1;
-          rows[i].style.display = (pg === cur) ? '' : 'none';
-        }
-        pager.innerHTML = '';
-        if (pages <= 1) return;
-        function mk(label, page, active, nav, disabled) {
-          var b = document.createElement('button');
-          b.type = 'button';
-          b.className = 'pg' + (active ? ' active' : '') + (nav ? ' nav' : '');
-          b.textContent = label;
-          if (disabled) { b.disabled = true; }
-          else {
-            b.addEventListener('click', function () {
-              cur = page; render();
-              if (wrap) wrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            });
-          }
-          pager.appendChild(b);
-        }
-        mk('‹', cur - 1, false, true, cur === 1);
-        for (var p = 1; p <= pages; p++) mk(String(p), p, p === cur, false, false);
-        mk('›', cur + 1, false, true, cur === pages);
-      }
-      render();
-    })();
-  </script>
 </Base>

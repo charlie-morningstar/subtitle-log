@@ -249,3 +249,28 @@ body.inner{background:radial-gradient(70% 50% at 50% 0%, rgba(240,185,100,.08), 
 .inner-foot a:hover{color:var(--brass)}
 :focus-visible{outline:2px solid var(--brass); outline-offset:3px; border-radius:.2rem}
 @media(prefers-reduced-motion:reduce){*{transition:none!important; animation:none!important}}
+
+/* ════════ 카테고리 아카이브 (번호 목록) ════════ */
+.arch{display:flex; flex-direction:column; margin-top:1.4rem}
+.arow{display:flex; gap:1.1rem; align-items:flex-start; text-decoration:none; color:inherit; padding:1.3rem .3rem; border-bottom:1px solid var(--line)}
+.arow:first-child{border-top:1px solid var(--line)}
+.anum{font-family:var(--mono); font-size:.82rem; color:var(--brass-lo); padding-top:.3rem; min-width:1.8rem; text-align:right; flex:none}
+.amain{flex:1; min-width:0}
+.ahead{display:flex; justify-content:space-between; align-items:baseline; gap:1rem}
+.at{font-family:var(--serif); font-size:1.24rem; font-weight:600; color:var(--ink); line-height:1.3}
+.arow:hover .at{color:var(--brass-hi)}
+.ad{font-family:var(--mono); font-size:.7rem; color:var(--ink-dim); white-space:nowrap}
+.asum{color:var(--ink-mid); font-size:.92rem; line-height:1.5; margin-top:.35rem;
+  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden}
+.ameta{display:flex; align-items:center; gap:.45rem; flex-wrap:wrap; margin-top:.6rem}
+.kind{font-family:var(--mono); font-size:.58rem; letter-spacing:.06em; text-transform:uppercase; padding:.16rem .5rem; border-radius:3px; border:1px solid transparent}
+.k-research{color:#e7c98c; background:rgba(216,182,118,.12); border-color:rgba(216,182,118,.4)}
+.k-analysis{color:#bfa07a; background:rgba(201,163,90,.06); border-color:rgba(201,163,90,.22)}
+.arch + .pager{margin-top:2rem}
+@media(max-width:640px){
+  .arow{gap:.7rem; padding:1.05rem .2rem}
+  .anum{min-width:1.4rem; font-size:.72rem; padding-top:.25rem}
+  .at{font-size:1.06rem}
+  .asum{font-size:.84rem}
+  .ahead{flex-direction:column; gap:.15rem}
+}

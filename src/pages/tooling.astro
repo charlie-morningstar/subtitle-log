@@ -1,6 +1,30 @@
 ---
 import Inner from '../layouts/Inner.astro';
+import Pager from '../components/Pager.astro';
+import { getAllPosts } from '../lib/posts';
+const CATEGORY = 'Tooling';
+const posts = (await getAllPosts()).filter((p) => p.category === CATEGORY);
+const fmt = (d: Date) => `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')}`;
 ---
 <Inner title="Tooling" label="Subtitle Log" lead="직접 만든 분석 도구와 스크립트.">
-  <p class="empty-note">곧 채워집니다 — AST 정적분석기 등 직접 만든 도구를 여기에 정리합니다.</p>
+  {posts.length === 0 && <p class="empty-note">곧 채워집니다 — 이 카테고리의 글이 여기 쌓입니다.</p>}
+  <div class="arch" id="archList">
+    {posts.map((p, i) => (
+      <a class="arow" href={p.href} data-idx={i}>
+        <span class="anum">{String(i + 1).padStart(2, '0')}</span>
+        <span class="amain">
+          <span class="ahead">
+            <span class="at">{p.title}</span>
+            <span class="ad">{fmt(p.date)}</span>
+          </span>
+          <span class="asum">{p.summary}</span>
+          <span class="ameta">
+            <span class={`kind k-${p.kind.toLowerCase()}`}>{p.kind}</span>
+            {p.tags.slice(0, 3).map((t) => <span class="tag">{t}</span>)}
+          </span>
+        </span>
+      </a>
+    ))}
+  </div>
+  <Pager listId="archList" rowSel=".arow" per={10} />
 </Inner>

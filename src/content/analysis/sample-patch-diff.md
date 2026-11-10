@@ -5,6 +5,7 @@ date: 2026-10-28
 tags: ["CVE"]
 draft: false
 featured: true
+category: CVE
 ---
 
 > 이 글은 예시 항목입니다. 실제 분석 내용으로 교체하세요.
@@ -17,4 +18,5 @@ featured: true
 ## 분석 과정
 
 ## 막힌 지점 · 배운 점
+
 

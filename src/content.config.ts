@@ -11,6 +11,7 @@ const research = defineCollection({
     tags: z.array(z.string()).default([]),
     draft: z.boolean().default(false),
     featured: z.boolean().default(false),
+    category: z.enum(['Kernel','CVE','Reversing','Tooling','Notes']).default('Notes'),
   }),
 });
 
@@ -24,6 +25,7 @@ const analysis = defineCollection({
     tags: z.array(z.string()).default([]),
     draft: z.boolean().default(false),
     featured: z.boolean().default(false),
+    category: z.enum(['Kernel','CVE','Reversing','Tooling','Notes']).default('Notes'),
   }),
 });
 
