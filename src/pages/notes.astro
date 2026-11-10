@@ -1,17 +1,21 @@
 ---
 import Inner from '../layouts/Inner.astro';
-import Pager from '../components/Pager.astro';
 import { getAllPosts } from '../lib/posts';
 const CATEGORY = 'Notes';
 const posts = (await getAllPosts()).filter((p) => p.category === CATEGORY);
 const fmt = (d: Date) => `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')}`;
-const shownTags = (tags: string[]) => tags.filter((t) => t.toLowerCase() !== CATEGORY.toLowerCase()).slice(0, 2);
 ---
 <Inner title="Notes" center>
   {posts.length === 0 && <p class="empty-note">곧 채워집니다 — 이 카테고리의 글이 여기 쌓입니다.</p>}
+  {posts.length > 0 && (
+    <div class="archbar">
+      <button type="button" class="sortbtn active" data-sort="newest">Newest</button>
+      <button type="button" class="sortbtn" data-sort="oldest">Oldest</button>
+    </div>
+  )}
   <div class="arch" id="archList">
     {posts.map((p, i) => (
-      <a class="arow" href={p.href} data-idx={i}>
+      <a class="arow" href={p.href} data-date={p.date.toISOString()}>
         <span class="anum">{String(i + 1).padStart(2, '0')}</span>
         <span class="amain">
           <span class="ahead">
@@ -19,13 +23,53 @@ const shownTags = (tags: string[]) => tags.filter((t) => t.toLowerCase() !== CAT
             <span class="ad">{fmt(p.date)}</span>
           </span>
           <span class="asum">{p.summary}</span>
-          <span class="ameta">
-            <span class={`kind k-${p.kind.toLowerCase()}`}>{p.kind}</span>
-            {shownTags(p.tags).map((t) => <span class="atag">{t}</span>)}
-          </span>
         </span>
       </a>
     ))}
   </div>
-  <Pager listId="archList" rowSel=".arow" per={10} />
+  <nav class="pager" id="pager" aria-label="페이지 이동"></nav>
+
+  <script is:inline>
+    (function () {
+      var list = document.getElementById('archList');
+      var pager = document.getElementById('pager');
+      if (!list) return;
+      var rows = Array.prototype.slice.call(list.querySelectorAll('.arow'));
+      var per = 10, page = 1, sort = 'newest';
+      function sortRows() {
+        rows.sort(function (a, b) {
+          var da = Date.parse(a.getAttribute('data-date')), db = Date.parse(b.getAttribute('data-date'));
+          return sort === 'newest' ? db - da : da - db;
+        });
+        rows.forEach(function (r) { list.appendChild(r); });
+        rows.forEach(function (r, i) { var n = r.querySelector('.anum'); if (n) n.textContent = String(i + 1).padStart(2, '0'); });
+      }
+      function render() {
+        for (var i = 0; i < rows.length; i++) rows[i].style.display = (Math.floor(i / per) + 1 === page) ? '' : 'none';
+        if (!pager) return;
+        pager.innerHTML = '';
+        var P = Math.max(1, Math.ceil(rows.length / per));
+        function mk(label, pg, active, nav, disabled) {
+          var b = document.createElement('button'); b.type = 'button';
+          b.className = 'pg' + (active ? ' active' : '') + (nav ? ' nav' : '');
+          b.textContent = label;
+          if (disabled) b.disabled = true;
+          else b.addEventListener('click', function () { page = pg; render(); list.scrollIntoView({ behavior: 'smooth', block: 'start' }); });
+          pager.appendChild(b);
+        }
+        if (P > 1) mk('‹', page - 1, false, true, page === 1);
+        for (var pg = 1; pg <= P; pg++) mk(String(pg), pg, pg === page, false, false);
+        if (P > 1) mk('›', page + 1, false, true, page === P);
+      }
+      var bar = document.querySelector('.archbar');
+      if (bar) bar.addEventListener('click', function (e) {
+        var btn = e.target.closest('.sortbtn'); if (!btn) return;
+        sort = btn.getAttribute('data-sort');
+        var all = bar.querySelectorAll('.sortbtn');
+        for (var i = 0; i < all.length; i++) all[i].classList.toggle('active', all[i] === btn);
+        page = 1; sortRows(); render();
+      });
+      sortRows(); render();
+    })();
+  </script>
 </Inner>
