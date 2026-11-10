@@ -188,8 +188,8 @@ html.anim-ready .curtain-img{transition:transform 1.5s cubic-bezier(.33,0,.2,1)}
 body.inner{background:radial-gradient(70% 50% at 50% 0%, rgba(240,185,100,.08), transparent 60%), linear-gradient(180deg,#241019,#1a0b11 60%,#140810); background-attachment:fixed;}
 .inner-top{position:sticky; top:0; z-index:20; backdrop-filter:blur(8px); background:rgba(20,8,14,.7); border-bottom:1px solid var(--line)}
 .inner-top .in{max-width:52rem; margin:0 auto; padding:1rem 1.6rem; display:flex; justify-content:space-between; align-items:center}
-.inner-top .back{font-family:var(--serif); font-size:1.5rem; line-height:1; color:var(--ink-mid); text-decoration:none; padding:.1rem .45rem; display:inline-block}
-.inner-top .back:hover{color:var(--brass)}
+.inner-top .back{display:inline-flex; align-items:center; justify-content:center; width:2.5rem; height:2.5rem; border-radius:.6rem; background:#f2ece2; color:#241209; font-family:var(--serif); font-size:1.35rem; line-height:1; padding-right:2px; text-decoration:none; box-shadow:0 2px 7px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.7); transition:background .2s, transform .2s}
+.inner-top .back:hover{background:#fff; transform:translateY(-1px)}
 .inner-top .mark{font-family:var(--serif); font-size:1.1rem; color:var(--ink); text-decoration:none}
 .inner-top .mark b{color:var(--brass)}
 .inner-body{max-width:52rem; margin:0 auto; padding:3rem 1.6rem 5rem; animation:pageIn .55s cubic-bezier(.2,.7,.3,1)}
@@ -292,3 +292,9 @@ body.inner{background:radial-gradient(70% 50% at 50% 0%, rgba(240,185,100,.08), 
   .asum{font-size:.84rem}
   .ahead{flex-direction:column; gap:.15rem}
 }
+
+/* ════════ 홈 하단 Connect ════════ */
+.home-foot{position:relative; z-index:2; text-align:center; padding:1rem 1rem 4.5rem}
+.home-foot .connect-label{font-family:var(--engrave); font-size:.76rem; letter-spacing:.22em; text-transform:uppercase; color:#b9915a; margin-bottom:.8rem; text-shadow:0 1px 0 rgba(255,210,150,.15)}
+.home-foot a{font-family:var(--mono); font-size:.95rem; color:#d8b676; text-decoration:none; border-bottom:1px solid rgba(216,182,118,.3); padding-bottom:2px; transition:color .2s, border-color .2s}
+.home-foot a:hover{color:var(--glow); border-color:rgba(240,185,100,.6)}
