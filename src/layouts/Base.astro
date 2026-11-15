@@ -45,16 +45,17 @@ const ogImage = new URL(image ?? base + 'og.png', site).href;
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Cormorant+Garamond:wght@500;600&family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
 </head>
 <body class={bodyClass}>
-  <div class="navmenu">
-    <button class="navmenu-btn" type="button" aria-label="메뉴" aria-expanded="false">
-      <span class="placard nav-plate">Menu</span>
+  <div class="navwood">
+    <button class="navwood-trigger" type="button" aria-label="메뉴" aria-expanded="false">
+      <img class="navwood-sign" src={`${nav}/img/wood-sign.png`} alt="" />
+      <span class="navwood-label">Menu</span>
     </button>
-    <div class="navmenu-list">
-      <a class="navmenu-item" href={`${nav}/about/`}><span class="placard nav-plate">About</span></a>
-      <a class="navmenu-item" href={`${nav}/`}><span class="placard nav-plate">Categories</span></a>
-      <a class="navmenu-item" href={`${nav}/#featured`}><span class="placard nav-plate">Featured Posts</span></a>
-      <a class="navmenu-item" href={`${nav}/#latestWrap`}><span class="placard nav-plate">Latest Entries</span></a>
-      <a class="navmenu-item" href={`${nav}/#connect`}><span class="placard nav-plate">Connect</span></a>
+    <div class="navwood-list">
+      <a class="wood-item" href={`${nav}/about/`}><span class="wtag">About</span></a>
+      <a class="wood-item" href={`${nav}/`}><span class="wtag">Categories</span></a>
+      <a class="wood-item" href={`${nav}/#featured`}><span class="wtag">Featured Posts</span></a>
+      <a class="wood-item" href={`${nav}/#latestWrap`}><span class="wtag">Latest Entries</span></a>
+      <a class="wood-item" href={`${nav}/#connect`}><span class="wtag">Connect</span></a>
     </div>
   </div>
 
@@ -62,8 +63,8 @@ const ogImage = new URL(image ?? base + 'og.png', site).href;
 
   <script is:inline>
     (function () {
-      var wrap = document.querySelector('.navmenu');
-      var btn = wrap && wrap.querySelector('.navmenu-btn');
+      var wrap = document.querySelector('.navwood');
+      var btn = wrap && wrap.querySelector('.navwood-trigger');
       if (!wrap || !btn) return;
       function close() { wrap.classList.remove('open'); btn.setAttribute('aria-expanded', 'false'); }
       btn.addEventListener('click', function (e) {
@@ -71,9 +72,9 @@ const ogImage = new URL(image ?? base + 'og.png', site).href;
         var open = wrap.classList.toggle('open');
         btn.setAttribute('aria-expanded', open ? 'true' : 'false');
       });
-      document.addEventListener('click', function (e) { if (!e.target.closest('.navmenu')) close(); });
+      document.addEventListener('click', function (e) { if (!e.target.closest('.navwood')) close(); });
       document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
-      wrap.querySelectorAll('.navmenu-item').forEach(function (a) { a.addEventListener('click', close); });
+      wrap.querySelectorAll('.wood-item').forEach(function (a) { a.addEventListener('click', close); });
     })();
   </script>
 </body>
