@@ -14,6 +14,7 @@ const {
 } = Astro.props;
 const base = import.meta.env.BASE_URL;
 const nav = base.replace(/\/$/, '');
+const isHome = bodyClass.includes('desk');
 const site = Astro.site ?? new URL('https://charlie-morningstar.github.io');
 const canonical = new URL(Astro.url.pathname, site).href;
 const ogImage = new URL(image ?? base + 'og.png', site).href;
@@ -45,19 +46,21 @@ const ogImage = new URL(image ?? base + 'og.png', site).href;
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Cormorant+Garamond:wght@500;600&family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
 </head>
 <body class={bodyClass}>
+  {isHome && (
   <div class="navwood">
     <button class="navwood-trigger" type="button" aria-label="메뉴" aria-expanded="false">
       <img class="navwood-sign" src={`${nav}/img/wood-sign.png`} alt="" />
       <span class="navwood-label">Menu</span>
     </button>
     <div class="navwood-list">
-      <a class="wood-item" href={`${nav}/about/`}><span class="mini"><img src={`${nav}/img/wood-plank.png`} alt="" /><span class="mlabel">About</span></span></a>
-      <a class="wood-item" href={`${nav}/#categories`}><span class="mini"><img src={`${nav}/img/wood-plank.png`} alt="" /><span class="mlabel">Categories</span></span></a>
-      <a class="wood-item" href={`${nav}/#featured`}><span class="mini"><img src={`${nav}/img/wood-plank.png`} alt="" /><span class="mlabel">Featured Posts</span></span></a>
-      <a class="wood-item" href={`${nav}/#latestWrap`}><span class="mini"><img src={`${nav}/img/wood-plank.png`} alt="" /><span class="mlabel">Latest Entries</span></span></a>
-      <a class="wood-item" href={`${nav}/#connect`}><span class="mini"><img src={`${nav}/img/wood-plank.png`} alt="" /><span class="mlabel">Connect</span></span></a>
+      <a class="wood-item" href={`${nav}/about/`}><span class="mini"><img src={`${nav}/img/wood-sign.png`} alt="" /><span class="mlabel">About</span></span></a>
+      <a class="wood-item" href={`${nav}/#top`}><span class="mini"><img src={`${nav}/img/wood-sign.png`} alt="" /><span class="mlabel">Categories</span></span></a>
+      <a class="wood-item" href={`${nav}/#featured`}><span class="mini"><img src={`${nav}/img/wood-sign.png`} alt="" /><span class="mlabel">Featured Posts</span></span></a>
+      <a class="wood-item" href={`${nav}/#latestWrap`}><span class="mini"><img src={`${nav}/img/wood-sign.png`} alt="" /><span class="mlabel">Latest Entries</span></span></a>
+      <a class="wood-item" href={`${nav}/#connect`}><span class="mini"><img src={`${nav}/img/wood-sign.png`} alt="" /><span class="mlabel">Connect</span></span></a>
     </div>
   </div>
+  )}
 
   <slot />
 
