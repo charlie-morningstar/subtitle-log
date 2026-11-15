@@ -3,12 +3,13 @@ import Inner from './Inner.astro';
 export interface Props {
   title: string;
   meta?: string;
+  description?: string;
   headings?: { depth: number; slug: string; text: string }[];
 }
-const { title, meta = '', headings = [] } = Astro.props;
+const { title, meta = '', description, headings = [] } = Astro.props;
 const toc = headings.filter((h) => h.depth >= 1 && h.depth <= 4);
 ---
-<Inner title={title} label={meta}>
+<Inner title={title} description={description} label={meta}>
   <article class="article">
     <div class="prose">
       <slot />

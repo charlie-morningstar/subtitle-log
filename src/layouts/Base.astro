@@ -4,12 +4,18 @@ export interface Props {
   title: string;
   description?: string;
   bodyClass?: string;
+  image?: string;
 }
 const {
   title,
   description = '윈도우 커널·시스템 취약점 분석. 연구와 공부를 기록합니다.',
   bodyClass = '',
+  image,
 } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const site = Astro.site ?? new URL('https://charlie-morningstar.github.io');
+const canonical = new URL(Astro.url.pathname, site).href;
+const ogImage = new URL(image ?? base + 'og.png', site).href;
 ---
 <!doctype html>
 <html lang="ko">
@@ -18,6 +24,21 @@ const {
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>{title}</title>
   <meta name="description" content={description} />
+  <link rel="canonical" href={canonical} />
+  <link rel="icon" type="image/svg+xml" href={base + 'favicon.svg'} />
+  <link rel="icon" type="image/png" href={base + 'favicon-32.png'} />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Subtitle Log" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:image" content={ogImage} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={ogImage} />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Cormorant+Garamond:wght@500;600&family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />

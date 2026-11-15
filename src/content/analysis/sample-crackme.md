@@ -1,5 +1,5 @@
 ---
-title: "리버싱 입문 — 간단한 crackme 풀이"
+title: "리버싱 입문 간단한 crackme 풀이"
 summary: "정적·동적 분석으로 간단한 crackme의 분기 조건을 찾아가는 기록."
 date: 2026-11-03
 tags: ["Reversing"]

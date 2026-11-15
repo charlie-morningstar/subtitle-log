@@ -1,0 +1,12 @@
+---
+import Base from '../layouts/Base.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<Base title="404 — Subtitle Log" bodyClass="inner">
+  <main class="notfound">
+    <div class="nf-code">404</div>
+    <h1>이 열쇠에 맞는 문이 없어요</h1>
+    <p>주소가 바뀌었거나 아직 없는 기록입니다.</p>
+    <a class="nf-home" href={base + '/'}>프런트로 돌아가기</a>
+  </main>
+</Base>

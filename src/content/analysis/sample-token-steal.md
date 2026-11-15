@@ -1,5 +1,5 @@
 ---
-title: "HEVD — Arbitrary Write로 토큰 스틸링"
+title: "HEVD Arbitrary Write로 토큰 스틸링"
 summary: "임의 쓰기 프리미티브로 SYSTEM 토큰을 훔치는 과정을 재현하고 정리."
 date: 2026-11-06
 tags: ["PC / Kernel"]

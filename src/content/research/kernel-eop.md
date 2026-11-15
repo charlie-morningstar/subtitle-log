@@ -1,5 +1,5 @@
 ---
-title: "윈도우 커널 Oneday EOP — Root Cause 분석"
+title: "윈도우 커널 Oneday EOP Root Cause 분석"
 summary: "HEVD와 공개 oneday를 따라가며 권한상승 취약점의 근본 원인을 분석하고, 재현과 막힌 지점까지 기록."
 date: 2026-11-07
 tags: ["PC / Kernel", "진행중"]
@@ -25,7 +25,7 @@ IOCTL 핸들러부터 취약 함수까지의 흐름을 적습니다.
 // 유저가 넘긴 크기를 검증하지 않고 커널 버퍼에 복사
 ```
 
-## Root Cause — 왜 터지는가
+## Root Cause 왜 터지는가
 
 이 글에서 가장 중요한 부분입니다. "무엇이, 왜" 잘못됐는지를 자신의 말로 설명합니다.
 

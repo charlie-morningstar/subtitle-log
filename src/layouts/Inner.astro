@@ -2,16 +2,17 @@
 import Base from './Base.astro';
 export interface Props {
   title: string;
+  description?: string;
   label?: string;
   lead?: string;
   center?: boolean;
   flora?: boolean;
 }
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-const { title, label, lead, center = false, flora = false } = Astro.props;
+const { title, description, label, lead, center = false, flora = false } = Astro.props;
 const img = (f: string) => `${base}/img/${f}`;
 ---
-<Base title={`${title} — 조은진`} bodyClass="inner">
+<Base title={`${title} — 조은진`} description={description} bodyClass="inner">
   <header class="inner-top">
     <div class="in">
       <a class="back" href={base + '/'} aria-label="뒤로가기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></a>
