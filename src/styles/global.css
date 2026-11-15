@@ -375,3 +375,22 @@ body.inner{background:radial-gradient(70% 50% at 50% 0%, rgba(240,185,100,.08), 
 .prose figcaption{text-align:center; font-family:var(--mono); font-size:.72rem; color:var(--ink-dim); margin-top:.6rem}
 .prose iframe{display:block; width:100%; aspect-ratio:16 / 9; border:1px solid rgba(201,163,90,.18);
   border-radius:9px; margin:1.5rem 0; box-shadow:0 8px 24px rgba(0,0,0,.4)}
+
+/* ════════ 태슬 메뉴 (벨풀) ════════ */
+.navpull{position:fixed; top:0; right:clamp(1rem,3vw,2.6rem); z-index:50}
+.pull-trigger{display:block; background:none; border:none; cursor:pointer; padding:0; line-height:0;
+  filter:drop-shadow(0 4px 9px rgba(0,0,0,.55)); transition:transform .35s cubic-bezier(.34,1.4,.64,1)}
+.pull-trigger .tassel{display:block; width:clamp(30px,3.2vw,40px); height:auto}
+.pull-trigger:hover{transform:translateY(5px)}
+.navpull.open .pull-trigger{transform:translateY(9px)}
+.pull-menu{position:absolute; top:clamp(92px,10vw,116px); right:-.2rem; min-width:196px;
+  background:linear-gradient(180deg,#2c0f19,#1c0a11); border:1px solid rgba(201,163,90,.35); border-radius:.6rem;
+  box-shadow:0 18px 42px rgba(0,0,0,.6); padding:.45rem 0; overflow:hidden;
+  opacity:0; transform:translateY(-10px) scaleY(.95); transform-origin:top right; pointer-events:none;
+  transition:opacity .3s ease, transform .3s ease}
+.navpull.open .pull-menu{opacity:1; transform:translateY(0) scaleY(1); pointer-events:auto}
+.pull-menu a{display:block; text-align:right; font-family:var(--engrave); font-size:.82rem; letter-spacing:.08em;
+  color:var(--ink-mid); text-decoration:none; padding:.68rem 1.25rem; transition:color .2s, background .2s}
+.pull-menu a + a{border-top:1px solid rgba(201,163,90,.1)}
+.pull-menu a:hover{color:var(--brass-hi); background:rgba(240,185,100,.08)}
+@media(prefers-reduced-motion:reduce){.pull-trigger,.pull-menu{transition:none}}

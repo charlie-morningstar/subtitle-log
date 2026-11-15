@@ -69,7 +69,7 @@ const fmt = (d: Date) => `${d.getFullYear()}.${String(d.getMonth() + 1).padStart
         <img class="lamp" src={img('lamp.png')} alt="" aria-hidden="true" />
       </div>
       <div class="cabinet">
-        <div class="ledger-frame">
+        <div class="ledger-frame" id="featured">
           <div class="sect-head"><span class="placard">Featured Posts</span></div>
           <div class="plist">
             {featured.length === 0 && <div class="empty">추천 글이 곧 올라옵니다.</div>}
@@ -101,7 +101,7 @@ const fmt = (d: Date) => `${d.getFullYear()}.${String(d.getMonth() + 1).padStart
   </section>
 
   <!-- Connect (홈 하단) -->
-  <footer class="home-foot">
+  <footer class="home-foot" id="connect">
     <div class="connect-label">Connect</div>
     <a href="mailto:subtitle8080@gmail.com">subtitle8080@gmail.com</a>
   </footer>
