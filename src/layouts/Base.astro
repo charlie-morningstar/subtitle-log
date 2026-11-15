@@ -45,38 +45,25 @@ const ogImage = new URL(image ?? base + 'og.png', site).href;
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Cormorant+Garamond:wght@500;600&family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
 </head>
 <body class={bodyClass}>
-  <div class="navpull">
-    <button class="pull-trigger" type="button" aria-label="메뉴" aria-expanded="false">
-      <svg class="tassel" viewBox="0 0 44 106" fill="none" aria-hidden="true">
-        <defs>
-          <linearGradient id="tg" x1="0" x2="0" y1="0" y2="1">
-            <stop offset="0" stop-color="#f1d79a"/><stop offset=".5" stop-color="#cda35c"/><stop offset="1" stop-color="#8f6a30"/>
-          </linearGradient>
-        </defs>
-        <path d="M22 0 C22 16 22 24 22 30" stroke="url(#tg)" stroke-width="2.5" stroke-linecap="round"/>
-        <ellipse cx="22" cy="36" rx="7" ry="6" fill="url(#tg)"/>
-        <path d="M13 42 Q22 38 31 42 L28 58 Q22 62 16 58 Z" fill="url(#tg)"/>
-        <g stroke="url(#tg)" stroke-width="2" stroke-linecap="round">
-          <path d="M16 60 L15 94"/><path d="M19 61 L18.5 98"/><path d="M22 61.5 L22 100"/>
-          <path d="M25 61 L25.5 98"/><path d="M28 60 L29 94"/>
-        </g>
-      </svg>
+  <div class="navmenu">
+    <button class="navmenu-btn" type="button" aria-label="메뉴" aria-expanded="false">
+      <span class="placard nav-plate">Menu</span>
     </button>
-    <nav class="pull-menu" aria-label="사이트 메뉴">
-      <a href={`${nav}/about/`}>About</a>
-      <a href={`${nav}/`}>Categories</a>
-      <a href={`${nav}/#featured`}>Featured Posts</a>
-      <a href={`${nav}/#latestWrap`}>Latest Entries</a>
-      <a href={`${nav}/#connect`}>Connect</a>
-    </nav>
+    <div class="navmenu-list">
+      <a class="navmenu-item" href={`${nav}/about/`}><span class="placard nav-plate">About</span></a>
+      <a class="navmenu-item" href={`${nav}/`}><span class="placard nav-plate">Categories</span></a>
+      <a class="navmenu-item" href={`${nav}/#featured`}><span class="placard nav-plate">Featured Posts</span></a>
+      <a class="navmenu-item" href={`${nav}/#latestWrap`}><span class="placard nav-plate">Latest Entries</span></a>
+      <a class="navmenu-item" href={`${nav}/#connect`}><span class="placard nav-plate">Connect</span></a>
+    </div>
   </div>
 
   <slot />
 
   <script is:inline>
     (function () {
-      var wrap = document.querySelector('.navpull');
-      var btn = wrap && wrap.querySelector('.pull-trigger');
+      var wrap = document.querySelector('.navmenu');
+      var btn = wrap && wrap.querySelector('.navmenu-btn');
       if (!wrap || !btn) return;
       function close() { wrap.classList.remove('open'); btn.setAttribute('aria-expanded', 'false'); }
       btn.addEventListener('click', function (e) {
@@ -84,9 +71,9 @@ const ogImage = new URL(image ?? base + 'og.png', site).href;
         var open = wrap.classList.toggle('open');
         btn.setAttribute('aria-expanded', open ? 'true' : 'false');
       });
-      document.addEventListener('click', function (e) { if (!e.target.closest('.navpull')) close(); });
+      document.addEventListener('click', function (e) { if (!e.target.closest('.navmenu')) close(); });
       document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
-      wrap.querySelectorAll('.pull-menu a').forEach(function (a) { a.addEventListener('click', close); });
+      wrap.querySelectorAll('.navmenu-item').forEach(function (a) { a.addEventListener('click', close); });
     })();
   </script>
 </body>
