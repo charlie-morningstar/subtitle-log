@@ -3,8 +3,10 @@ import Inner from './Inner.astro';
 export interface Props {
   title: string;
   meta?: string;
+  headings?: { depth: number; slug: string; text: string }[];
 }
-const { title, meta = '' } = Astro.props;
+const { title, meta = '', headings = [] } = Astro.props;
+const toc = headings.filter((h) => h.depth >= 1 && h.depth <= 4);
 ---
 <Inner title={title} label={meta}>
   <article class="article">
@@ -12,4 +14,32 @@ const { title, meta = '' } = Astro.props;
       <slot />
     </div>
   </article>
+
+  {toc.length > 0 && (
+    <nav class="toc" aria-label="목차">
+      <div class="toc-title">목차</div>
+      {toc.map((h) => (
+        <a href={`#${h.slug}`} class={`toc-d${h.depth}`}>{h.text}</a>
+      ))}
+    </nav>
+  )}
+
+  <script is:inline>
+    (function () {
+      var links = Array.prototype.slice.call(document.querySelectorAll('.toc a'));
+      if (!links.length) return;
+      var heads = links.map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); });
+      function spy() {
+        var cur = -1, offset = 140;
+        for (var i = 0; i < heads.length; i++) {
+          if (heads[i] && heads[i].getBoundingClientRect().top - offset <= 0) cur = i; else break;
+        }
+        if (cur < 0) cur = 0;
+        for (var j = 0; j < links.length; j++) links[j].classList.toggle('active', j === cur);
+      }
+      window.addEventListener('scroll', spy, { passive: true });
+      window.addEventListener('resize', spy);
+      spy();
+    })();
+  </script>
 </Inner>
