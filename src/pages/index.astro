@@ -39,7 +39,7 @@ const fmt = (d: Date) => `${d.getFullYear()}.${String(d.getMonth() + 1).padStart
       <div class="search-results" id="searchResults"></div>
     </div>
 
-    <nav class="rack" aria-label="메뉴">
+    <nav class="rack" id="categories" aria-label="메뉴">
       {keys.map((k) => (
         <a class="peg" href={k.href} aria-label={k.label}>
           <span class="plate">
