@@ -332,8 +332,7 @@ body.inner{background:radial-gradient(70% 50% at 50% 0%, rgba(240,185,100,.08), 
 
 /* ════════ 글 목차 (오른쪽 · 스크롤 스파이) ════════ */
 .toc{display:none; position:fixed; top:6.5rem; right:1.6rem; width:178px; max-height:calc(100vh - 9rem);
-  overflow-y:auto; z-index:5; padding-left:1rem; border-left:1px solid var(--line)}
-.toc-title{font-family:var(--mono); font-size:.62rem; letter-spacing:.16em; text-transform:uppercase; color:var(--brass-lo); margin-bottom:.8rem}
+  overflow-y:auto; z-index:5}
 .toc a{display:block; font-family:var(--sans); font-size:.78rem; line-height:1.35; color:var(--ink-dim);
   text-decoration:none; padding:.28rem 0; opacity:.68; transition:color .35s ease, opacity .35s ease}
 .toc a:hover{color:var(--ink-mid); opacity:1}
