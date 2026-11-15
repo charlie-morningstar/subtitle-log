@@ -60,7 +60,7 @@ const fmt = (d: Date) => `${d.getFullYear()}.${String(d.getMonth() + 1).padStart
     }));
   </script>
 
-  <!-- 원목 협탁 (스크롤) : 램프·화병 + 캐비닛 = Featured Posts -->
+  <!-- 원목 협탁 (스크롤) : 램프·화병 + 캐비닛 (Featured + Latest) -->
   <section class="console">
     <div class="console-inner">
       <div class="console-top">
@@ -82,23 +82,21 @@ const fmt = (d: Date) => `${d.getFullYear()}.${String(d.getMonth() + 1).padStart
             ))}
           </div>
         </div>
+        <div class="latest-wrap" id="latestWrap">
+          <div class="sect-head"><span class="placard">Latest Entries</span></div>
+          <div class="plist" id="latestList">
+            {latest.length === 0 && <div class="empty">곧 첫 기록이 새겨집니다.</div>}
+            {latest.map((p, i) => (
+              <a class="lrow" href={p.href} data-idx={i}>
+                <span class="phead"><span class="pt">{p.title}</span><span class="pd">{fmt(p.date)}</span></span>
+                <span class="ps">{p.summary}</span>
+                {p.tags.length > 0 && <span class="ptags">{p.tags.slice(0, 3).map((t) => <span class="tag">{t}</span>)}</span>}
+              </a>
+            ))}
+          </div>
+          <Pager listId="latestList" rowSel=".lrow" per={5} />
+        </div>
       </div>
-    </div>
-
-    <!-- Latest Entries : 5개씩 + 페이지 번호 -->
-    <div class="latest-wrap" id="latestWrap">
-      <div class="sect-head"><span class="placard">Latest Entries</span></div>
-      <div class="plist" id="latestList">
-        {latest.length === 0 && <div class="empty">곧 첫 기록이 새겨집니다.</div>}
-        {latest.map((p, i) => (
-          <a class="lrow" href={p.href} data-idx={i}>
-            <span class="phead"><span class="pt">{p.title}</span><span class="pd">{fmt(p.date)}</span></span>
-            <span class="ps">{p.summary}</span>
-            {p.tags.length > 0 && <span class="ptags">{p.tags.slice(0, 3).map((t) => <span class="tag">{t}</span>)}</span>}
-          </a>
-        ))}
-      </div>
-      <Pager listId="latestList" rowSel=".lrow" per={5} />
     </div>
   </section>
 
