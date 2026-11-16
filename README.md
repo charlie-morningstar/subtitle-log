@@ -8,7 +8,7 @@ Astro로 개발한 취약점 연구 기록용 사이트
 
 ```bash
 npm install      # 최초 1번
-npm run dev      # 로컬 미리보기(localhost:4321/subtitle-log)
+npm run dev      # 로컬 미리보기(localhost:4321)
 npm run build    # 배포용 빌드 (dist/)
 npm run preview  # 빌드 결과 확인
 ```

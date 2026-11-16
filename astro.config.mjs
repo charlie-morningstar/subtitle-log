@@ -3,8 +3,8 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://charlie-morningstar.github.io',
-  base: '/subtitle-log',
+  site: 'https://subtitle-log.github.io',
+  base: '/',
   trailingSlash: 'always',
   markdown: {
     shikiConfig: { theme: 'css-variables' },

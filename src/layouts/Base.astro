@@ -15,7 +15,7 @@ const {
 const base = import.meta.env.BASE_URL;
 const nav = base.replace(/\/$/, '');
 const isHome = bodyClass.includes('desk');
-const site = Astro.site ?? new URL('https://charlie-morningstar.github.io');
+const site = Astro.site ?? new URL('https://subtitle-log.github.io');
 const canonical = new URL(Astro.url.pathname, site).href;
 const ogImage = new URL(image ?? base + 'og.png', site).href;
 ---

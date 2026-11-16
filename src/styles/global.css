@@ -29,7 +29,7 @@ body.desk::before{
   content:""; position:absolute; top:0; left:0; right:0; bottom:0; z-index:0; pointer-events:none; opacity:.5;
   -webkit-mask-image:linear-gradient(to bottom, #000 0%, #000 46%, transparent 88%); mask-image:linear-gradient(to bottom, #000 0%, #000 46%, transparent 88%);
   background-image:
-    url(/subtitle-log/img/wall.svg),
+    url(/img/wall.svg),
     repeating-linear-gradient(90deg, rgba(0,0,0,.05) 0 1px, transparent 1px 4px);
   background-size:170px 170px, auto;
 }
@@ -42,7 +42,7 @@ body.desk::before{
 
 .valance{position:absolute; top:0; left:0; right:0; z-index:6; pointer-events:none;
   height:clamp(24px,3.4vh,42px);
-  background:url(/subtitle-log/img/valance.png) top center / auto 100% repeat-x}
+  background:url(/img/valance.png) top center / auto 100% repeat-x}
 
 .curtain-img{position:absolute; top:-5vh; height:105vh; width:auto; z-index:3; pointer-events:auto; user-select:none; will-change:transform}
 .curtain-img.left{left:-22px; transform-origin:top left}
