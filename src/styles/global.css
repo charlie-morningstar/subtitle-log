@@ -63,7 +63,6 @@ html.anim-ready .curtain-img{transition:transform 1.5s cubic-bezier(.33,0,.2,1)}
 
 /* 사인 */
 .sign{position:relative; z-index:4; text-align:center; margin-bottom:1.7rem}
-.sign .est{font-family:var(--mono); font-size:.64rem; letter-spacing:.3em; color:var(--brass); text-transform:uppercase}
 .sign h1{font-family:var(--serif); font-weight:600; font-size:clamp(2.4rem,6vw,3.8rem); color:var(--ink); letter-spacing:.02em; line-height:1.02; margin:.45rem 0 .35rem; text-shadow:0 2px 24px rgba(0,0,0,.5)}
 .sign .role{font-family:var(--engrave); font-size:.8rem; letter-spacing:.24em; color:var(--ink-mid); text-transform:uppercase}
 
