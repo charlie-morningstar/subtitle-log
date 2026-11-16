@@ -1,6 +1,7 @@
 # Subtitle Log
 
 Astro로 개발한 취약점 연구 기록용 사이트
+
 마크다운 파일을 추가하면 목록과 글 페이지가 자동으로 생성된다.
 
 ## 실행
@@ -32,6 +33,7 @@ draft: false         # true 면 사이트에 안 나옴
 ```
 
 `summary` 와 `tags` 는 선택 항목이다. 홈의 Latest Entries 에는 날짜순으로 자동 반영되고,
+
 Featured Posts 에는 `featured: true` 인 글만 올라간다.
 
 ## 비공개
