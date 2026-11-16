@@ -20,7 +20,6 @@ const searchData = posts.map((p) => ({ t: p.title, h: p.href, c: p.category }));
 const fmt = (d: Date) => `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')}`;
 ---
 <Base title="Subtitle Log — Security Research Notebook" bodyClass="desk">
-  <!-- 히어로 -->
   <section class="hero" id="top">
     <div class="valance" aria-hidden="true"></div>
     <img class="curtain-img left" src={img('curtain_left.png')} alt="" aria-hidden="true" />
@@ -60,7 +59,6 @@ const fmt = (d: Date) => `${d.getFullYear()}.${String(d.getMonth() + 1).padStart
     }));
   </script>
 
-  <!-- 원목 협탁 (스크롤) : 램프·화병 + 캐비닛 (Featured + Latest) -->
   <section class="console">
     <div class="console-inner">
       <div class="console-top">
@@ -100,7 +98,6 @@ const fmt = (d: Date) => `${d.getFullYear()}.${String(d.getMonth() + 1).padStart
     </div>
   </section>
 
-  <!-- Connect (홈 하단) -->
   <footer class="home-foot" id="connect">
     <div class="connect-label">Connect</div>
     <a href="mailto:subtitle8080@gmail.com">subtitle8080@gmail.com</a>
