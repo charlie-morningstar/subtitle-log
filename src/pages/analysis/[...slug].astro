@@ -17,8 +17,8 @@ const fmt = (d) => `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0
 const meta = [
   'Analysis',
   fmt(entry.data.date),
-  entry.data.tags.join(' · '),
-].filter(Boolean).join('  ·  ');
+  entry.data.tags.join(', '),
+].filter(Boolean).join(', ');
 ---
 <Post
   title={entry.data.title}

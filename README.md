@@ -1,57 +1,42 @@
-# 8080_folio — 조은진 Security Research Portfolio
+# Subtitle Log
 
-버건디 벨벳 + 양피지 두루마리 컨셉의 보안 연구 포트폴리오.
-[Astro](https://astro.build) 정적 사이트 생성기로 만들어졌고, 글은 마크다운 파일로 자유롭게 추가합니다.
+Astro로 만든 보안 연구 기록용 정적 사이트. 마크다운 파일을 추가하면 목록과 글 페이지가 자동으로 생성된다.
 
-## 빠른 시작
+## 실행
 
 ```bash
-npm install      # 최초 1회 (의존성 설치)
-npm run dev      # 로컬 미리보기 → http://localhost:4321/8080_folio
-npm run build    # 배포용 빌드 (dist/ 생성)
-npm run preview  # 빌드 결과 미리보기
+npm install      # 최초 1회
+npm run dev      # 로컬 미리보기 (localhost:4321/subtitle-log)
+npm run build    # 배포용 빌드 (dist/)
+npm run preview  # 빌드 결과 확인
 ```
 
-## 글 추가하는 법 (코딩 아님)
+## 글 추가
 
-새 글 = 마크다운 파일 하나 추가. 사이트가 자동으로 목록·페이지를 만들어 줍니다.
+- 연구 기록: `src/content/research/` 에 `.md` 추가
+- 분석 글: `src/content/analysis/` 에 `.md` 추가
 
-- **직접 수행한 연구** → `src/content/research/` 에 `.md` 추가 → 홈의 "두루마리"로 표시
-- **분석 글(블로그)** → `src/content/analysis/` 에 `.md` 추가 → 홈의 "Analysis" 목록에 표시
-
-각 파일 맨 위 형식:
+파일 맨 위 형식:
 
 ```markdown
 ---
-title: "글 제목"
-summary: "한 줄 요약"
-date: 2026-11-08
-tags: ["Kernel", "HEVD"]
-draft: false      # true 로 두면 사이트에 안 나옴 (초안)
+title: "제목"
+date: 2026-11-16
+category: "Kernel"   # Kernel | CVE | Reversing | Tooling | Notes
+featured: false      # true 면 홈 Featured Posts 에 노출 (최대 3개)
+draft: false         # true 면 사이트에 안 나옴
 ---
 
-여기부터 본문 (마크다운)
+본문
 ```
 
-## 비공개 글
+`summary` 와 `tags` 는 선택 항목이다. 홈의 Latest Entries 에는 날짜순으로 자동 반영되고, Featured Posts 에는 `featured: true` 인 글만 올라간다.
 
-- 사이트에서 숨기기만: 글 맨 위 `draft: true`
-- 아예 올리지 않기(진짜 비공개): `drafts/` 폴더에 두면 git에 커밋되지 않습니다 (`.gitignore` 처리됨).
-  공개 전 PoC, 민감한 분석은 여기에 두세요.
+## 비공개
 
-## 디자인 수정
-
-- 색/폰트: `src/styles/global.css` 맨 위 `:root` 변수
-- CS 마인드맵 내용: `src/data/mindmap.ts`
-- 배포 주소 설정: `astro.config.mjs` (`site`, `base`)
-
-## 브랜치 운영
-
-- `main` — 배포되는 공개 버전 (push 하면 자동으로 GitHub Pages 배포)
-- `dev` — 개발/작성용. 글·디자인 작업은 여기서 하고, 완성되면 `main` 으로 병합
+- 사이트에서만 숨기기: `draft: true`
+- 아예 커밋하지 않기: `drafts/` 폴더에 두면 `.gitignore` 로 제외된다. 공개 전 PoC나 민감한 자료는 여기에.
 
 ## 배포
 
-`main` 브랜치에 push 하면 `.github/workflows/deploy.yml` 이 자동으로 빌드 후
-GitHub Pages 에 배포합니다. (GitHub 저장소 Settings → Pages → Source 를
-"GitHub Actions" 로 한 번 설정해 두어야 합니다.)
+`main` 에 push 하면 `.github/workflows/deploy.yml` 가 빌드 후 GitHub Pages 에 배포한다. 저장소 Settings → Pages → Source 를 "GitHub Actions" 로 한 번 설정해 두어야 한다.

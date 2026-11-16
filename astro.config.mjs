@@ -4,7 +4,7 @@ import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
   site: 'https://charlie-morningstar.github.io',
-  base: '/8080_folio',
+  base: '/subtitle-log',
   trailingSlash: 'always',
   markdown: {
     shikiConfig: { theme: 'css-variables' },

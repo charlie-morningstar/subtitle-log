@@ -7,14 +7,14 @@ const research = (await getCollection('research', ({ data }) => !data.draft))
 ---
 <Inner
   title="Research"
-  label="03 · Research"
-  lead="직접 수행한 연구 활동 — root cause 분석과 그 기록."
+  label="Research"
+  lead="직접 수행한 연구와 root cause 분석 기록."
 >
   <div class="cards">
-    {research.length === 0 && <p class="empty-note">곧 채워집니다.</p>}
+    {research.length === 0 && <p class="empty-note">아직 글이 없습니다.</p>}
     {research.map((r) => (
       <a class="card" href={`${base}/research/${r.id}/`}>
-        {r.data.tags.length > 0 && <span class="ctags">{r.data.tags.join(' · ')}</span>}
+        {r.data.tags.length > 0 && <span class="ctags">{r.data.tags.join(', ')}</span>}
         <h3>{r.data.title}</h3>
         <p class="csum">{r.data.summary}</p>
         <span class="cgo">읽기 →</span>

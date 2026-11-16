@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://charlie-morningstar.github.io/8080_folio/sitemap-index.xml
+Sitemap: https://charlie-morningstar.github.io/subtitle-log/sitemap-index.xml
