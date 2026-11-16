@@ -1,12 +1,13 @@
 # Subtitle Log
 
-Astro로 만든 보안 연구 기록용 정적 사이트. 마크다운 파일을 추가하면 목록과 글 페이지가 자동으로 생성된다.
+Astro로 개발한 취약점 연구 기록용 사이트
+마크다운 파일을 추가하면 목록과 글 페이지가 자동으로 생성된다.
 
 ## 실행
 
 ```bash
-npm install      # 최초 1회
-npm run dev      # 로컬 미리보기 (localhost:4321/subtitle-log)
+npm install      # 최초 1번
+npm run dev      # 로컬 미리보기(localhost:4321/subtitle-log)
 npm run build    # 배포용 빌드 (dist/)
 npm run preview  # 빌드 결과 확인
 ```
@@ -30,7 +31,8 @@ draft: false         # true 면 사이트에 안 나옴
 본문
 ```
 
-`summary` 와 `tags` 는 선택 항목이다. 홈의 Latest Entries 에는 날짜순으로 자동 반영되고, Featured Posts 에는 `featured: true` 인 글만 올라간다.
+`summary` 와 `tags` 는 선택 항목이다. 홈의 Latest Entries 에는 날짜순으로 자동 반영되고,
+Featured Posts 에는 `featured: true` 인 글만 올라간다.
 
 ## 비공개
 
